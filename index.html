@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NANOTEC - @Tony_Real..JS</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0d0d0d;
+      color: white;
+      padding: 0 15px;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: #ff2d55;
+    }
+
+    .profile-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-top: 10px;
+      border: 3px solid #ff2d55;
+    }
+
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+    }
+
+    .card {
+      background-color: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(255, 45, 85, 0.4);
+      max-width: 400px;
+      width: 100%;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .card-content {
+      padding: 15px;
+    }
+
+    .card-content h3 {
+      margin: 0 0 10px;
+      font-size: 1.3rem;
+      color: #ff2d55;
+      text-align: center;
+    }
+
+    .card-content a {
+      display: block;
+      color: #1da1f2;
+      text-decoration: none;
+      text-align: center;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .card-content a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+
+      .card-content h3 {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>@Tony_Real..JS</h1>
+    <img src="perfil/perfil.jpg" alt="Foto de perfil" class="profile-img">
+  </header>
+
+  <div class="gallery">
+
+    <div class="card">
+      <img src="proy1/1.jpg" alt="Imagen del Proyecto Nanotec">
+      <div class="card-content">
+        <h3>Proyecto: NANOTEC</h3>
+        <a href="https://anthony-cup.github.io/manotext-codgio-realjsweb_/" target="_blank">
+          🔗 Abrir enlace 
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
