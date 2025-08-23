@@ -84,6 +84,100 @@
       text-decoration: underline;
     }
 
+    /* WhatsApp Popup Styles */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .popup-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .popup-content {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      border-radius: 15px;
+      padding: 20px;
+      max-width: 90%;
+      width: 400px;
+      text-align: center;
+      position: relative;
+      animation: slideIn 0.5s ease forwards;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .popup-content img.whatsapp-icon {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 15px;
+    }
+
+    .popup-content h2 {
+      color: white;
+      font-size: 1.5rem;
+      margin: 0 0 10px;
+    }
+
+    .popup-content p {
+      color: white;
+      font-size: 1rem;
+      margin: 0 0 20px;
+    }
+
+    .popup-content .open-btn {
+      background-color: #ffffff;
+      color: #128C7E;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .popup-content .open-btn:hover {
+      background-color: #e0e0e0;
+    }
+
+    .popup-content .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .popup-content .close-btn:hover {
+      color: #e0e0e0;
+    }
+
     @media (max-width: 600px) {
       header h1 {
         font-size: 1.6rem;
@@ -91,6 +185,18 @@
 
       .card-content h3 {
         font-size: 1.1rem;
+      }
+
+      .popup-content {
+        width: 90%;
+      }
+
+      .popup-content h2 {
+        font-size: 1.2rem;
+      }
+
+      .popup-content p {
+        font-size: 0.9rem;
       }
     }
   </style>
@@ -148,6 +254,28 @@
       </div>
     </div>
   </div>
+
+  <!-- WhatsApp Popup -->
+  <div class="popup-overlay" id="whatsapp-popup">
+    <div class="popup-content">
+      <button class="close-btn" onclick="closePopup()">×</button>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon" class="whatsapp-icon">
+      <h2>¡Únete a nuestro canal de WhatsApp!</h2>
+      <p> Entra ahora y sé parte de la comunidad! 🔥</p>
+      <button class="open-btn" onclick="window.open('https://whatsapp.com/channel/0029VbB5RALId7nHMW3BYj0c', '_blank')">Abrir WhatsApp</button>
+    </div>
+  </div>
+
+  <script>
+    // Show popup on page load
+    window.onload = function() {
+      document.getElementById('whatsapp-popup').classList.add('show');
+    };
+
+    // Close popup function
+    function closePopup() {
+      document.getElementById('whatsapp-popup').classList.remove('show');
+    }
+  </script>
 </body>
 </html>
-
