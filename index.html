@@ -3,85 +3,110 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NANOTEC - @Tony_Real..JS</title>
+  <title>NANOTEC - @yosoytonyhxp</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0d0d0d;
-      color: white;
-      padding: 0 15px;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #1c2526, #0a0f12);
+      color: #f0e6d2;
+      padding: 0;
+      overflow-x: hidden;
     }
 
     header {
       text-align: center;
-      padding: 20px 0;
+      padding: 40px 20px;
+      background: rgba(10, 15, 18, 0.95);
+      border-bottom: 3px solid #d4af37;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 10;
     }
 
     header h1 {
-      font-size: 2rem;
-      color: #ff2d55;
+      font-size: 2.5rem;
+      color: #d4af37;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+      margin: 0;
     }
 
     .profile-img {
-      width: 120px;
-      height: 120px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       object-fit: cover;
-      margin-top: 10px;
-      border: 3px solid #ff2d55;
+      margin: 20px auto;
+      border: 5px solid #d4af37;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .profile-img:hover {
+      transform: scale(1.1) rotate(3deg);
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
     }
 
     .gallery {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      padding: 40px 20px;
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
     .card {
-      background-color: #1a1a1a;
-      border-radius: 12px;
+      background: #1c2526;
+      border-radius: 15px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(255, 45, 85, 0.4);
-      max-width: 400px;
-      width: 100%;
-      transition: transform 0.2s;
-      margin-bottom: 20px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      border: 1px solid rgba(212, 175, 55, 0.3);
     }
 
     .card:hover {
-      transform: scale(1.02);
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(212, 175, 55, 0.5);
     }
 
     .card img {
       width: 100%;
-      height: auto;
-      display: block;
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 2px solid #d4af37;
     }
 
     .card-content {
-      padding: 15px;
+      padding: 20px;
+      text-align: center;
     }
 
     .card-content h3 {
-      margin: 0 0 10px;
-      font-size: 1.3rem;
-      color: #ff2d55;
-      text-align: center;
+      font-size: 1.5rem;
+      color: #d4af37;
+      margin: 0 0 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .card-content a {
-      display: block;
-      color: #1da1f2;
+      display: inline-block;
+      color: #f0e6d2;
+      background: linear-gradient(90deg, #d4af37, #b8972e);
+      padding: 10px 20px;
+      border-radius: 25px;
       text-decoration: none;
-      text-align: center;
-      font-weight: bold;
-      margin-top: 10px;
+      font-weight: 600;
+      transition: transform 0.3s ease, background 0.3s ease;
     }
 
     .card-content a:hover {
-      text-decoration: underline;
+      background: linear-gradient(90deg, #b8972e, #d4af37);
+      transform: scale(1.05);
     }
 
     /* WhatsApp Popup Styles */
@@ -91,7 +116,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.85);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -107,96 +132,117 @@
     }
 
     .popup-content {
-      background: linear-gradient(135deg, #25D366, #128C7E);
-      border-radius: 15px;
-      padding: 20px;
+      background: linear-gradient(135deg, #1c2526, #0a0f12);
+      border: 2px solid #d4af37;
+      border-radius: 20px;
+      padding: 30px;
       max-width: 90%;
-      width: 400px;
+      width: 450px;
       text-align: center;
       position: relative;
-      animation: slideIn 0.5s ease forwards;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.5s ease forwards;
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
     }
 
-    @keyframes slideIn {
+    @keyframes fadeIn {
       from {
-        transform: translateY(-50px);
+        transform: scale(0.8);
         opacity: 0;
       }
       to {
-        transform: translateY(0);
+        transform: scale(1);
         opacity: 1;
       }
     }
 
     .popup-content img.whatsapp-icon {
-      width: 50px;
-      height: 50px;
-      margin-bottom: 15px;
+      width: 70px;
+      height: 70px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
     }
 
     .popup-content h2 {
-      color: white;
-      font-size: 1.5rem;
-      margin: 0 0 10px;
+      color: #d4af37;
+      font-size: 1.8rem;
+      margin: 0 0 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .popup-content p {
-      color: white;
-      font-size: 1rem;
-      margin: 0 0 20px;
+      color: #f0e6d2;
+      font-size: 1.1rem;
+      margin: 0 0 25px;
     }
 
     .popup-content .open-btn {
-      background-color: #ffffff;
-      color: #128C7E;
-      padding: 10px 20px;
+      background: linear-gradient(90deg, #d4af37, #b8972e);
+      color: #0a0f12;
+      padding: 12px 30px;
       border: none;
-      border-radius: 25px;
-      font-weight: bold;
+      border-radius: 30px;
+      font-weight: 600;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: transform 0.3s ease, background 0.3s ease;
     }
 
     .popup-content .open-btn:hover {
-      background-color: #e0e0e0;
+      background: linear-gradient(90deg, #b8972e, #d4af37);
+      transform: scale(1.05);
     }
 
     .popup-content .close-btn {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 15px;
+      right: 15px;
       background: none;
       border: none;
-      color: white;
-      font-size: 1.5rem;
+      color: #d4af37;
+      font-size: 2rem;
       cursor: pointer;
-      transition: color 0.3s ease;
+      transition: color 0.3s ease, transform 0.3s ease;
     }
 
     .popup-content .close-btn:hover {
-      color: #e0e0e0;
+      color: #f0e6d2;
+      transform: rotate(90deg);
     }
 
     @media (max-width: 600px) {
       header h1 {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
+      }
+
+      .profile-img {
+        width: 120px;
+        height: 120px;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+        padding: 20px 15px;
+      }
+
+      .card img {
+        height: 180px;
       }
 
       .card-content h3 {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
       }
 
       .popup-content {
         width: 90%;
+        padding: 20px;
       }
 
       .popup-content h2 {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
       }
 
       .popup-content p {
-        font-size: 0.9rem;
+        font-size: 1rem;
       }
     }
   </style>
@@ -209,48 +255,46 @@
 
   <div class="gallery">
     <div class="card">
+      <img src="proy1/6.jpg" alt="Imagen de Tunel de recuerdos">
+      <div class="card-content">
+        <h3>Tunel de recuerdos</h3>
+        <!-- Enlace no proporcionado; puedes agregar uno aquí si lo tienes -->
+        <a href="#" target="_blank">🔗 Abrir enlace</a>
+      </div>
+    </div>
+    <div class="card">
       <img src="proy1/5.jpg" alt="Imagen de Galaxia Sorpresa Personalizada">
       <div class="card-content">
         <h3>Galaxia Sorpresa Personalizada</h3>
-        <a href="https://anthony-cup.github.io/resubidoUniversoPersonalizado/" target="_blank">
-          🔗 Abrir enlace
-        </a>
+        <a href="https://anthony-cup.github.io/resubidoUniversoPersonalizado/" target="_blank">🔗 Abrir enlace</a>
       </div>
     </div>
     <div class="card">
       <img src="proy1/4.jpg" alt="Imagen de Pistola de Corazones">
       <div class="card-content">
         <h3>Pistola de Corazones</h3>
-        <a href="https://compartir-ling.web.app" target="_blank">
-          🔗 Abrir enlace
-        </a>
+        <a href="https://compartir-ling.web.app" target="_blank">🔗 Abrir enlace</a>
       </div>
     </div>
     <div class="card">
       <img src="proy1/3.png" alt="Imagen de Con esto dirá que sí">
       <div class="card-content">
         <h3>Con esto dirá que sí..!</h3>
-        <a href="https://anthony-cup.github.io/declaracion-bonito-autor-tonyrealjs/" target="_blank">
-          🔗 Abrir enlace
-        </a>
+        <a href="https://anthony-cup.github.io/declaracion-bonito-autor-tonyrealjs/" target="_blank">🔗 Abrir enlace</a>
       </div>
     </div>
     <div class="card">
       <img src="proy1/2.jpg" alt="Imagen de Carta sorpresa">
       <div class="card-content">
         <h3>Carta sorpresa</h3>
-        <a href="https://anthony-cup.github.io/mi-web-anthony/" target="_blank">
-          🔗 Abrir enlace
-        </a>
+        <a href="https://anthony-cup.github.io/mi-web-anthony/" target="_blank">🔗 Abrir enlace</a>
       </div>
     </div>
     <div class="card">
       <img src="proy1/1.jpg" alt="Imagen del Proyecto Nanotec">
       <div class="card-content">
         <h3>Proyecto: NANOTEC</h3>
-        <a href="https://anthony-cup.github.io/manotext-codgio-realjsweb_/" target="_blank">
-          🔗 Abrir enlace
-        </a>
+        <a href="https://anthony-cup.github.io/manotext-codgio-realjsweb_/" target="_blank">🔗 Abrir enlace</a>
       </div>
     </div>
   </div>
@@ -260,8 +304,8 @@
     <div class="popup-content">
       <button class="close-btn" onclick="closePopup()">×</button>
       <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon" class="whatsapp-icon">
-      <h2>¡Únete a nuestro canal de WhatsApp!</h2>
-      <p> Entra ahora y sé parte de la comunidad! 🔥</p>
+      <h2>¡Únete a nuestro canal!</h2>
+      <p>Forma parte de la comunidad y descubre más proyectos innovadores. 🔥</p>
       <button class="open-btn" onclick="window.open('https://whatsapp.com/channel/0029VbB5RALId7nHMW3BYj0c', '_blank')">Abrir WhatsApp</button>
     </div>
   </div>
@@ -279,4 +323,3 @@
   </script>
 </body>
 </html>
-
