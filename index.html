@@ -295,12 +295,6 @@
       width: 60px;
       height: 60px;
       margin: 0 auto 20px;
-      animation: spin 4s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
     }
 
     .modal h2 {
@@ -344,9 +338,75 @@
       cursor: pointer;
     }
 
-    .close-x:active {
-      color: #fff;
-      transform: scale(1.2);
+    .browser-warning-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(45deg, #ff6b35, #f7931e);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      z-index: 1500;
+      animation: warningPulse 2s ease-in-out infinite;
+      box-shadow: 0 5px 15px rgba(255,107,53,0.5);
+    }
+
+    @keyframes warningPulse {
+      0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 5px 15px rgba(255,107,53,0.5);
+      }
+      50% { 
+        transform: scale(1.1);
+        box-shadow: 0 8px 25px rgba(255,107,53,0.8);
+      }
+    }
+
+    .browser-warning-btn:active {
+      animation: none;
+      transform: scale(0.95);
+    }
+
+    .donation-modal {
+      background: linear-gradient(135deg, rgba(0,8,20,0.98), rgba(0,17,34,0.98));
+      border: 3px solid #ffd700;
+      border-radius: 25px;
+      padding: 30px;
+      text-align: center;
+      max-width: 90%;
+      width: 380px;
+      position: relative;
+      animation: modalGlow 3s ease-in-out infinite;
+    }
+
+    .payment-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .payment-btn {
+      background: linear-gradient(45deg, #ffd700, #b8860b);
+      color: #000814;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .payment-btn:active {
+      transform: scale(0.95);
+      box-shadow: 0 5px 20px rgba(255,215,0,0.7);
     }
 
     @media (max-width: 480px) {
@@ -359,7 +419,9 @@
   </style>
 </head>
 <body>
-  <header>
+  <button class="browser-warning-btn" onclick="showBrowserWarning()">
+    ⚠️ AVISO
+  </button>
     <h1 class="logo">@YOSOYTONYHXP</h1>
     <div class="profile-section">
       <img src="perfil/perfil.jpg" alt="Perfil" class="profile-img">
@@ -425,7 +487,45 @@
     💬 ¡Únete al canal!
   </div>
 
-  <div class="overlay" id="modal">
+  <div class="overlay" id="donation-modal">
+    <div class="donation-modal">
+      <button class="close-x" onclick="hideDonationModal()">×</button>
+      <h2 style="color: #ffd700; margin-bottom: 10px;">💝 APOYA AL CREADOR</h2>
+      <p style="color: #cccccc;">Si te gustan mis proyectos, puedes apoyarme:</p>
+      <div class="payment-buttons">
+        <button class="payment-btn" onclick="showYape()">
+          🇵🇪 YAPE (Perú)
+        </button>
+        <button class="payment-btn" onclick="openPayPal()">
+          🌎 PAYPAL (Internacional)
+        </button>
+      </div>
+      <button class="modal-btn" onclick="hideDonationModal()" style="background: rgba(255,215,0,0.2); color: #ffd700; margin-top: 15px;">CONTINUAR</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="yape-modal">
+    <div class="modal">
+      <button class="close-x" onclick="hideYapeModal()">×</button>
+      <h2>💰 DONACIÓN YAPE</h2>
+      <img src="yape.jpg" alt="QR Yape" style="width: 250px; height: auto; border-radius: 15px; margin: 20px 0;">
+      <p>Escanea el código QR con tu app Yape</p>
+      <button class="modal-btn" onclick="hideYapeModal()">CERRAR</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="browser-modal">
+    <div class="modal">
+      <button class="close-x" onclick="hideBrowserModal()">×</button>
+      <div class="modal-icon">
+        <i class="fas fa-browser" style="font-size: 3rem; color: #ff6b35;"></i>
+      </div>
+      <h2 style="color: #ff6b35;">🌐 RECOMENDACIÓN</h2>
+      <p>Para mejor experiencia, abre este link en <strong>Chrome</strong>, <strong>Firefox</strong> o <strong>Safari</strong></p>
+      <p style="font-size: 0.85rem; margin-top: 10px;">No uses el navegador de TikTok para evitar problemas</p>
+      <button class="modal-btn" onclick="hideBrowserModal()">ENTENDIDO</button>
+    </div>
+  </div>
     <div class="modal">
       <button class="close-x" onclick="hideModal()">×</button>
       <div class="modal-icon">
@@ -439,6 +539,45 @@
   </div>
 
   <script>
+    let donationShown = false;
+    let browserShown = false;
+
+    function showDonationModal() {
+      if (!donationShown) {
+        document.getElementById('donation-modal').style.display = 'flex';
+        donationShown = true;
+      }
+    }
+
+    function hideDonationModal() {
+      document.getElementById('donation-modal').style.display = 'none';
+      if (!browserShown) {
+        setTimeout(showModal, 1000);
+      }
+    }
+
+    function showYape() {
+      document.getElementById('yape-modal').style.display = 'flex';
+    }
+
+    function hideYapeModal() {
+      document.getElementById('yape-modal').style.display = 'none';
+    }
+
+    function openPayPal() {
+      window.open('https://paypal.me/tonyhxp', '_blank');
+      hideDonationModal();
+    }
+
+    function showBrowserWarning() {
+      document.getElementById('browser-modal').style.display = 'flex';
+      browserShown = true;
+    }
+
+    function hideBrowserModal() {
+      document.getElementById('browser-modal').style.display = 'none';
+    }
+
     function showModal() {
       document.getElementById('modal').style.display = 'flex';
     }
@@ -452,19 +591,21 @@
       hideModal();
     }
 
-    // Auto-mostrar modal después de 3 segundos
-    setTimeout(showModal, 3000);
+    // Mostrar modal de donación primero después de 2 segundos
+    setTimeout(showDonationModal, 2000);
 
     // Animaciones táctiles para las tarjetas
-    document.querySelectorAll('.project-card').forEach(card => {
-      card.addEventListener('touchstart', function() {
-        this.style.transform = 'scale(0.95)';
-        this.style.filter = 'brightness(1.2)';
-      });
-      
-      card.addEventListener('touchend', function() {
-        this.style.transform = 'scale(1)';
-        this.style.filter = 'brightness(1)';
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('touchstart', function() {
+          this.style.transform = 'scale(0.95)';
+          this.style.filter = 'brightness(1.2)';
+        });
+        
+        card.addEventListener('touchend', function() {
+          this.style.transform = 'scale(1)';
+          this.style.filter = 'brightness(1)';
+        });
       });
     });
   </script>
