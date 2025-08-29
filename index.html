@@ -236,6 +236,29 @@
       box-shadow: 0 5px 20px rgba(255,215,0,0.6);
     }
 
+    .project-notice {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(45deg, #ffd700, #b8860b);
+      color: #000814;
+      padding: 5px 15px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      z-index: 2;
+      box-shadow: 0 3px 10px rgba(255,215,0,0.5);
+      animation: noticeGlow 2s ease-in-out infinite;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    @keyframes noticeGlow {
+      0%, 100% { box-shadow: 0 3px 10px rgba(255,215,0,0.5); }
+      50% { box-shadow: 0 5px 15px rgba(255,215,0,0.8); }
+    }
+
     .browser-warning-btn {
       position: fixed;
       top: 20px;
@@ -338,9 +361,17 @@
       justify-content: center;
       align-items: center;
       z-index: 2000;
+      opacity: 0;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
     }
 
-    .modal {
+    .overlay.show {
+      display: flex;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal, .donation-modal {
       background: linear-gradient(135deg, rgba(0,8,20,0.95), rgba(0,17,34,0.95));
       border: 2px solid #ffd700;
       border-radius: 25px;
@@ -350,6 +381,19 @@
       width: 350px;
       position: relative;
       animation: modalGlow 3s ease-in-out infinite;
+      transform: scale(0.8);
+      opacity: 0;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+
+    .donation-modal {
+      width: 380px;
+      border: 3px solid #ffd700;
+    }
+
+    .overlay.show .modal, .overlay.show .donation-modal {
+      transform: scale(1);
+      opacity: 1;
     }
 
     @keyframes modalGlow {
@@ -408,18 +452,6 @@
       transform: scale(1.2);
     }
 
-    .donation-modal {
-      background: linear-gradient(135deg, rgba(0,8,20,0.98), rgba(0,17,34,0.98));
-      border: 3px solid #ffd700;
-      border-radius: 25px;
-      padding: 30px;
-      text-align: center;
-      max-width: 90%;
-      width: 380px;
-      position: relative;
-      animation: modalGlow 3s ease-in-out infinite;
-    }
-
     .payment-buttons {
       display: flex;
       flex-direction: column;
@@ -455,6 +487,7 @@
       .modal { padding: 25px 20px; }
       .browser-warning-btn { font-size: 0.6rem; padding: 8px 12px; }
       .floating-popup, .donation-btn { font-size: 0.7rem; padding: 10px 15px; }
+      .project-notice { font-size: 0.7rem; padding: 4px 12px; }
     }
   </style>
 </head>
@@ -477,14 +510,16 @@
 
   <div class="projects-grid">
     <div class="project-card">
+      <div class="project-notice">¡Personaliza tu link!</div>
       <img src="proy1/6.jpg" alt="Túnel de recuerdos" class="card-image">
       <div class="card-body">
         <h3 class="project-title">TÚNEL DE RECUERDOS</h3>
-        <a href="#" class="project-btn">🚀 EXPLORAR</a>
+        <a href="https://tunel-de-recuerdos.web.app/" target="_blank" class="project-btn">🚀 EXPLORAR</a>
       </div>
     </div>
 
     <div class="project-card">
+      <div class="project-notice">¡Personaliza tu link!</div>
       <img src="proy1/5.jpg" alt="Galaxia Personalizada" class="card-image">
       <div class="card-body">
         <h3 class="project-title">GALAXIA PERSONALIZADA</h3>
@@ -493,6 +528,7 @@
     </div>
 
     <div class="project-card">
+      <div class="project-notice">¡Personaliza tu link!</div>
       <img src="proy1/4.jpg" alt="Pistola de Corazones" class="card-image">
       <div class="card-body">
         <h3 class="project-title">PISTOLA DE CORAZONES</h3>
@@ -556,7 +592,7 @@
     <div class="modal">
       <button class="close-x" onclick="hideYapeModal()">×</button>
       <h2>💰 DONACIÓN YAPE</h2>
-      <img src="proy1/yape.jpg" alt="QR Yape" style="width: 250px; height: auto; border-radius: 15px; margin: 20px 0;">
+      <img src="yape.jpg" alt="QR Yape" style="width: 250px; height: auto; border-radius: 15px; margin: 20px 0;">
       <p>Escanea el código QR con tu app Yape</p>
       <button class="modal-btn" onclick="hideYapeModal()">CERRAR</button>
     </div>
@@ -592,21 +628,30 @@
 
   <script>
     function showDonationModal() {
-      document.getElementById('donation-modal').style.display = 'flex';
+      const modal = document.getElementById('donation-modal');
+      modal.style.display = 'flex';
+      setTimeout(() => modal.classList.add('show'), 10);
     }
 
     function hideDonationModal() {
-      document.getElementById('donation-modal').style.display = 'none';
-      // Mostrar modal de WhatsApp después del modal de donación
-      setTimeout(showWhatsAppModal, 1000);
+      const modal = document.getElementById('donation-modal');
+      modal.classList.remove('show');
+      setTimeout(() => {
+        modal.style.display = 'none';
+        showWhatsAppModal();
+      }, 500);
     }
 
     function showYape() {
-      document.getElementById('yape-modal').style.display = 'flex';
+      const modal = document.getElementById('yape-modal');
+      modal.style.display = 'flex';
+      setTimeout(() => modal.classList.add('show'), 10);
     }
 
     function hideYapeModal() {
-      document.getElementById('yape-modal').style.display = 'none';
+      const modal = document.getElementById('yape-modal');
+      modal.classList.remove('show');
+      setTimeout(() => modal.style.display = 'none', 500);
     }
 
     function openPayPal() {
@@ -615,19 +660,27 @@
     }
 
     function showBrowserWarning() {
-      document.getElementById('browser-modal').style.display = 'flex';
+      const modal = document.getElementById('browser-modal');
+      modal.style.display = 'flex';
+      setTimeout(() => modal.classList.add('show'), 10);
     }
 
     function hideBrowserModal() {
-      document.getElementById('browser-modal').style.display = 'none';
+      const modal = document.getElementById('browser-modal');
+      modal.classList.remove('show');
+      setTimeout(() => modal.style.display = 'none', 500);
     }
 
     function showWhatsAppModal() {
-      document.getElementById('whatsapp-modal').style.display = 'flex';
+      const modal = document.getElementById('whatsapp-modal');
+      modal.style.display = 'flex';
+      setTimeout(() => modal.classList.add('show'), 10);
     }
 
     function hideWhatsAppModal() {
-      document.getElementById('whatsapp-modal').style.display = 'none';
+      const modal = document.getElementById('whatsapp-modal');
+      modal.classList.remove('show');
+      setTimeout(() => modal.style.display = 'none', 500);
     }
 
     function openWhatsApp() {
@@ -635,10 +688,8 @@
       hideWhatsAppModal();
     }
 
-    // Mostrar modal de donación automáticamente después de 2 segundos
-    setTimeout(showDonationModal, 2000);
+    setTimeout(showDonationModal, 3000);
 
-    // Animaciones táctiles para móvil
     document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('.project-card').forEach(card => {
         card.addEventListener('touchstart', function() {
