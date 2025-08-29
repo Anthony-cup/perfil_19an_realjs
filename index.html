@@ -547,7 +547,7 @@
           🌎 PAYPAL (Internacional)
         </button>
       </div>
-      <button class="modal-btn" onclick="hideDonationModal()" style="background: rgba(255,215,0,0.2); color: #ffd700; margin-top: 15px;">CONTINUAR</button>{{ edit_2 }}
+      <button class="modal-btn" onclick="hideDonationModal()" style="background: rgba(255,215,0,0.2); color: #ffd700; margin-top: 15px;">CONTINUAR</button>
     </div>
   </div>
 
@@ -597,6 +597,8 @@
 
     function hideDonationModal() {
       document.getElementById('donation-modal').style.display = 'none';
+      // Mostrar modal de WhatsApp después del modal de donación
+      setTimeout(showWhatsAppModal, 1000);
     }
 
     function showYape() {
