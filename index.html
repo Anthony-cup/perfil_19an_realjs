@@ -57,7 +57,9 @@
     }
 
     .profile-section {
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       margin: 20px 0;
     }
 
@@ -67,7 +69,7 @@
       border-radius: 50%;
       border: 4px solid #ffd700;
       box-shadow: 0 0 30px rgba(255,215,0,0.6);
-      position: relative;
+      object-fit: cover;
       animation: orbitGlow 3s ease-in-out infinite;
     }
 
@@ -103,6 +105,7 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      text-decoration: none;
     }
 
     .social-btn::before {
@@ -173,7 +176,6 @@
       height: 200px;
       object-fit: cover;
       filter: brightness(0.9) contrast(1.1);
-      position: relative;
     }
 
     .card-body {
@@ -234,17 +236,49 @@
       box-shadow: 0 5px 20px rgba(255,215,0,0.6);
     }
 
+    .browser-warning-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: linear-gradient(45deg, #ff6b35, #f7931e);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 10px 15px;
+      font-weight: 700;
+      font-size: 0.7rem;
+      z-index: 1500;
+      animation: warningPulse 2s ease-in-out infinite;
+      box-shadow: 0 5px 15px rgba(255,107,53,0.5);
+    }
+
+    @keyframes warningPulse {
+      0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 5px 15px rgba(255,107,53,0.5);
+      }
+      50% { 
+        transform: scale(1.1);
+        box-shadow: 0 8px 25px rgba(255,107,53,0.8);
+      }
+    }
+
+    .browser-warning-btn:active {
+      animation: none;
+      transform: scale(0.95);
+    }
+
     .floating-popup {
       position: fixed;
       bottom: 20px;
-      right: 20px;
+      left: 20px;
       background: linear-gradient(135deg, #ffd700, #b8860b);
       color: #000814;
-      padding: 15px 20px;
+      padding: 12px 18px;
       border-radius: 50px;
       box-shadow: 0 8px 25px rgba(255,215,0,0.5);
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       z-index: 1000;
       animation: bounce 2s ease-in-out infinite;
       border: 2px solid rgba(255,255,255,0.3);
@@ -256,6 +290,38 @@
     }
 
     .floating-popup:active {
+      animation: none;
+      transform: scale(0.9);
+    }
+
+    .donation-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #ff6b35, #f7931e);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 50px;
+      box-shadow: 0 8px 25px rgba(255,107,53,0.5);
+      font-weight: 700;
+      font-size: 0.8rem;
+      z-index: 1000;
+      animation: donationGlow 2.5s ease-in-out infinite;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+
+    @keyframes donationGlow {
+      0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 8px 25px rgba(255,107,53,0.5);
+      }
+      50% { 
+        transform: scale(1.05);
+        box-shadow: 0 12px 35px rgba(255,107,53,0.8);
+      }
+    }
+
+    .donation-btn:active {
       animation: none;
       transform: scale(0.9);
     }
@@ -317,7 +383,7 @@
       border: none;
       border-radius: 25px;
       font-weight: 700;
-      margin: 0 10px;
+      margin: 5px;
       transition: all 0.3s ease;
     }
 
@@ -335,39 +401,11 @@
       color: #ffd700;
       font-size: 1.8rem;
       font-weight: bold;
-      cursor: pointer;
     }
 
-    .browser-warning-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: linear-gradient(45deg, #ff6b35, #f7931e);
-      color: white;
-      border: none;
-      border-radius: 50px;
-      padding: 12px 20px;
-      font-weight: 700;
-      font-size: 0.8rem;
-      z-index: 1500;
-      animation: warningPulse 2s ease-in-out infinite;
-      box-shadow: 0 5px 15px rgba(255,107,53,0.5);
-    }
-
-    @keyframes warningPulse {
-      0%, 100% { 
-        transform: scale(1);
-        box-shadow: 0 5px 15px rgba(255,107,53,0.5);
-      }
-      50% { 
-        transform: scale(1.1);
-        box-shadow: 0 8px 25px rgba(255,107,53,0.8);
-      }
-    }
-
-    .browser-warning-btn:active {
-      animation: none;
-      transform: scale(0.95);
+    .close-x:active {
+      color: #fff;
+      transform: scale(1.2);
     }
 
     .donation-modal {
@@ -415,19 +453,23 @@
       .card-image { height: 180px; }
       .project-title { font-size: 1.1rem; }
       .modal { padding: 25px 20px; }
+      .browser-warning-btn { font-size: 0.6rem; padding: 8px 12px; }
+      .floating-popup, .donation-btn { font-size: 0.7rem; padding: 10px 15px; }
     }
   </style>
 </head>
 <body>
   <button class="browser-warning-btn" onclick="showBrowserWarning()">
-    ⚠️ AVISO
+    ⚠️ NAVEGADOR
   </button>
+
+  <header>
     <h1 class="logo">@YOSOYTONYHXP</h1>
     <div class="profile-section">
       <img src="perfil/perfil.jpg" alt="Perfil" class="profile-img">
       <div class="social-bar">
         <a href="#" class="social-btn"><i class="fab fa-x-twitter"></i></a>
-        <a href="https://www.tiktok.com/@yosoytonyhxp?is_from_webapp=1&sender_device=pc" class="social-btn"><i class="fab fa-tiktok"></i></a>
+        <a href="https://www.tiktok.com/@yosoytonyhxp?is_from_webapp=1&sender_device=pc" target="_blank" class="social-btn"><i class="fab fa-tiktok"></i></a>
         <a href="#" class="social-btn"><i class="fab fa-github"></i></a>
       </div>
     </div>
@@ -446,7 +488,7 @@
       <img src="proy1/5.jpg" alt="Galaxia Personalizada" class="card-image">
       <div class="card-body">
         <h3 class="project-title">GALAXIA PERSONALIZADA</h3>
-        <a href="https://anthony-cup.github.io/resubidoUniversoPersonalizado/" class="project-btn">🌌 DESCUBRIR</a>
+        <a href="https://anthony-cup.github.io/resubidoUniversoPersonalizado/" target="_blank" class="project-btn">🌌 DESCUBRIR</a>
       </div>
     </div>
 
@@ -454,7 +496,7 @@
       <img src="proy1/4.jpg" alt="Pistola de Corazones" class="card-image">
       <div class="card-body">
         <h3 class="project-title">PISTOLA DE CORAZONES</h3>
-        <a href="https://compartir-ling.web.app" class="project-btn">💛 JUGAR</a>
+        <a href="https://compartir-ling.web.app" target="_blank" class="project-btn">💛 JUGAR</a>
       </div>
     </div>
 
@@ -462,7 +504,7 @@
       <img src="proy1/3.png" alt="Declaración especial" class="card-image">
       <div class="card-body">
         <h3 class="project-title">DECLARACIÓN ESPECIAL</h3>
-        <a href="https://anthony-cup.github.io/declaracion-bonito-autor-tonyrealjs/" class="project-btn">💫 VER MAGIA</a>
+        <a href="https://anthony-cup.github.io/declaracion-bonito-autor-tonyrealjs/" target="_blank" class="project-btn">💫 VER MAGIA</a>
       </div>
     </div>
 
@@ -470,7 +512,7 @@
       <img src="proy1/2.jpg" alt="Carta Sorpresa" class="card-image">
       <div class="card-body">
         <h3 class="project-title">CARTA SORPRESA</h3>
-        <a href="https://anthony-cup.github.io/mi-web-anthony/" class="project-btn">📜 LEER</a>
+        <a href="https://anthony-cup.github.io/mi-web-anthony/" target="_blank" class="project-btn">📜 LEER</a>
       </div>
     </div>
 
@@ -478,15 +520,20 @@
       <img src="proy1/1.jpg" alt="Proyecto NANOTEC" class="card-image">
       <div class="card-body">
         <h3 class="project-title">PROYECTO NANOTEC</h3>
-        <a href="https://anthony-cup.github.io/manotext-codgio-realjsweb_/" class="project-btn">⚡ ACCEDER</a>
+        <a href="https://anthony-cup.github.io/manotext-codgio-realjsweb_/" target="_blank" class="project-btn">⚡ ACCEDER</a>
       </div>
     </div>
   </div>
 
-  <div class="floating-popup" onclick="showModal()">
-    💬 ¡Únete al canal!
+  <div class="floating-popup" onclick="showWhatsAppModal()">
+    💬 Canal
   </div>
 
+  <div class="donation-btn" onclick="showDonationModal()">
+    💝 Donar
+  </div>
+
+  <!-- Modal de Donación -->
   <div class="overlay" id="donation-modal">
     <div class="donation-modal">
       <button class="close-x" onclick="hideDonationModal()">×</button>
@@ -500,10 +547,11 @@
           🌎 PAYPAL (Internacional)
         </button>
       </div>
-      <button class="modal-btn" onclick="hideDonationModal()" style="background: rgba(255,215,0,0.2); color: #ffd700; margin-top: 15px;">CONTINUAR</button>
+      <button class="modal-btn" onclick="hideDonationModal()" style="background: rgba(255,215,0,0.2); color: #ffd700; margin-top: 15px;">CONTINUAR</button>{{ edit_2 }}
     </div>
   </div>
 
+  <!-- Modal de Yape -->
   <div class="overlay" id="yape-modal">
     <div class="modal">
       <button class="close-x" onclick="hideYapeModal()">×</button>
@@ -514,11 +562,12 @@
     </div>
   </div>
 
+  <!-- Modal de Navegador -->
   <div class="overlay" id="browser-modal">
     <div class="modal">
       <button class="close-x" onclick="hideBrowserModal()">×</button>
       <div class="modal-icon">
-        <i class="fas fa-browser" style="font-size: 3rem; color: #ff6b35;"></i>
+        <i class="fas fa-globe" style="font-size: 3rem; color: #ff6b35;"></i>
       </div>
       <h2 style="color: #ff6b35;">🌐 RECOMENDACIÓN</h2>
       <p>Para mejor experiencia, abre este link en <strong>Chrome</strong>, <strong>Firefox</strong> o <strong>Safari</strong></p>
@@ -526,34 +575,28 @@
       <button class="modal-btn" onclick="hideBrowserModal()">ENTENDIDO</button>
     </div>
   </div>
+
+  <!-- Modal de WhatsApp -->
+  <div class="overlay" id="whatsapp-modal">
     <div class="modal">
-      <button class="close-x" onclick="hideModal()">×</button>
+      <button class="close-x" onclick="hideWhatsAppModal()">×</button>
       <div class="modal-icon">
-        <i class="fab fa-whatsapp" style="font-size: 3rem; color: #ffd700;"></i>
+        <i class="fab fa-whatsapp" style="font-size: 3rem; color: #25D366;"></i>
       </div>
-      <h2>¡COMUNIDAD EXCLUSIVA!</h2>
+      <h2 style="color: #25D366;">¡ÚNETE AL CANAL!</h2>
       <p>Descubre proyectos únicos y conecta con otros desarrolladores 🔥</p>
       <button class="modal-btn" onclick="openWhatsApp()">UNIRSE AHORA</button>
-      <button class="modal-btn" onclick="hideModal()" style="background: rgba(255,215,0,0.2); color: #ffd700;">DESPUÉS</button>
+      <button class="modal-btn" onclick="hideWhatsAppModal()" style="background: rgba(255,215,0,0.2); color: #ffd700;">DESPUÉS</button>
     </div>
   </div>
 
   <script>
-    let donationShown = false;
-    let browserShown = false;
-
     function showDonationModal() {
-      if (!donationShown) {
-        document.getElementById('donation-modal').style.display = 'flex';
-        donationShown = true;
-      }
+      document.getElementById('donation-modal').style.display = 'flex';
     }
 
     function hideDonationModal() {
       document.getElementById('donation-modal').style.display = 'none';
-      if (!browserShown) {
-        setTimeout(showModal, 1000);
-      }
     }
 
     function showYape() {
@@ -571,30 +614,29 @@
 
     function showBrowserWarning() {
       document.getElementById('browser-modal').style.display = 'flex';
-      browserShown = true;
     }
 
     function hideBrowserModal() {
       document.getElementById('browser-modal').style.display = 'none';
     }
 
-    function showModal() {
-      document.getElementById('modal').style.display = 'flex';
+    function showWhatsAppModal() {
+      document.getElementById('whatsapp-modal').style.display = 'flex';
     }
 
-    function hideModal() {
-      document.getElementById('modal').style.display = 'none';
+    function hideWhatsAppModal() {
+      document.getElementById('whatsapp-modal').style.display = 'none';
     }
 
     function openWhatsApp() {
       window.open('https://whatsapp.com/channel/0029VbB5RALId7nHMW3BYj0c', '_blank');
-      hideModal();
+      hideWhatsAppModal();
     }
 
-    // Mostrar modal de donación primero después de 2 segundos
+    // Mostrar modal de donación automáticamente después de 2 segundos
     setTimeout(showDonationModal, 2000);
 
-    // Animaciones táctiles para las tarjetas
+    // Animaciones táctiles para móvil
     document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('.project-card').forEach(card => {
         card.addEventListener('touchstart', function() {
