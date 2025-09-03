@@ -16,7 +16,6 @@
       overflow-x: hidden;
       position: relative;
     }
-
     body::before {
       content: '';
       position: fixed;
@@ -28,7 +27,6 @@
       pointer-events: none;
       z-index: 0;
     }
-
     header {
       text-align: center;
       padding: 25px 15px;
@@ -38,7 +36,6 @@
       position: relative;
       z-index: 1;
     }
-
     .logo {
       font-size: 2.2rem;
       font-weight: 900;
@@ -50,19 +47,16 @@
       margin-bottom: 15px;
       letter-spacing: 4px;
     }
-
     @keyframes goldShine {
       0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
     }
-
     .profile-section {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin: 20px 0;
     }
-
     .profile-img {
       width: 120px;
       height: 120px;
@@ -72,25 +66,22 @@
       object-fit: cover;
       animation: orbitGlow 3s ease-in-out infinite;
     }
-
     @keyframes orbitGlow {
-      0%, 100% { 
+      0%, 100% {
         box-shadow: 0 0 30px rgba(255,215,0,0.6), inset 0 0 20px rgba(255,215,0,0.2);
         transform: scale(1);
       }
-      50% { 
+      50% {
         box-shadow: 0 0 50px rgba(255,215,0,0.8), inset 0 0 30px rgba(255,215,0,0.4);
         transform: scale(1.05);
       }
     }
-
     .social-bar {
       display: flex;
       justify-content: center;
       gap: 25px;
       margin: 20px 0;
     }
-
     .social-btn {
       width: 50px;
       height: 50px;
@@ -107,7 +98,6 @@
       overflow: hidden;
       text-decoration: none;
     }
-
     .social-btn::before {
       content: '';
       position: absolute;
@@ -119,17 +109,14 @@
       animation: rotate 3s linear infinite;
       z-index: -1;
     }
-
     @keyframes rotate {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
     .social-btn:active {
       transform: scale(0.9);
       box-shadow: 0 0 25px rgba(255,215,0,0.8);
     }
-
     .projects-grid {
       padding: 20px 15px;
       max-width: 500px;
@@ -137,7 +124,6 @@
       position: relative;
       z-index: 1;
     }
-
     .project-card {
       background: linear-gradient(135deg, rgba(0,8,20,0.8), rgba(0,17,34,0.6));
       backdrop-filter: blur(15px);
@@ -148,7 +134,6 @@
       position: relative;
       transition: all 0.4s ease;
     }
-
     .project-card::before {
       content: '';
       position: absolute;
@@ -159,30 +144,25 @@
       background: linear-gradient(90deg, transparent, rgba(255,215,0,0.1), transparent);
       animation: sweep 4s ease-in-out infinite;
     }
-
     @keyframes sweep {
       0%, 100% { left: -100%; }
       50% { left: 100%; }
     }
-
     .project-card:active {
       transform: translateY(-8px) scale(0.98);
       border-color: #ffd700;
       box-shadow: 0 15px 40px rgba(255,215,0,0.4);
     }
-
     .card-image {
       width: 100%;
       height: 200px;
       object-fit: cover;
       filter: brightness(0.9) contrast(1.1);
     }
-
     .card-body {
       padding: 20px;
       text-align: center;
     }
-
     .project-title {
       font-size: 1.2rem;
       font-weight: 700;
@@ -192,12 +172,10 @@
       -webkit-text-fill-color: transparent;
       animation: textPulse 2s ease-in-out infinite;
     }
-
     @keyframes textPulse {
       0%, 100% { opacity: 0.9; }
       50% { opacity: 1; }
     }
-
     .project-btn {
       background: linear-gradient(45deg, #ffd700, #b8860b);
       color: #000814;
@@ -212,7 +190,6 @@
       text-decoration: none;
       display: inline-block;
     }
-
     .project-btn::after {
       content: '';
       position: absolute;
@@ -225,17 +202,14 @@
       transition: all 0.5s ease;
       transform: translate(-50%, -50%);
     }
-
     .project-btn:active::after {
       width: 300px;
       height: 300px;
     }
-
     .project-btn:active {
       transform: scale(0.95);
       box-shadow: 0 5px 20px rgba(255,215,0,0.6);
     }
-
     .project-notice {
       position: absolute;
       top: 10px;
@@ -253,12 +227,10 @@
       text-transform: uppercase;
       white-space: nowrap;
     }
-
     @keyframes noticeGlow {
       0%, 100% { box-shadow: 0 3px 10px rgba(255,215,0,0.5); }
       50% { box-shadow: 0 5px 15px rgba(255,215,0,0.8); }
     }
-
     .browser-warning-btn {
       position: fixed;
       top: 20px;
@@ -274,23 +246,20 @@
       animation: warningPulse 2s ease-in-out infinite;
       box-shadow: 0 5px 15px rgba(255,107,53,0.5);
     }
-
     @keyframes warningPulse {
-      0%, 100% { 
+      0%, 100% {
         transform: scale(1);
         box-shadow: 0 5px 15px rgba(255,107,53,0.5);
       }
-      50% { 
+      50% {
         transform: scale(1.1);
         box-shadow: 0 8px 25px rgba(255,107,53,0.8);
       }
     }
-
     .browser-warning-btn:active {
       animation: none;
       transform: scale(0.95);
     }
-
     .floating-popup {
       position: fixed;
       bottom: 20px;
@@ -306,17 +275,14 @@
       animation: bounce 2s ease-in-out infinite;
       border: 2px solid rgba(255,255,255,0.3);
     }
-
     @keyframes bounce {
       0%, 100% { transform: translateY(0) scale(1); }
       50% { transform: translateY(-10px) scale(1.05); }
     }
-
     .floating-popup:active {
       animation: none;
       transform: scale(0.9);
     }
-
     .donation-btn {
       position: fixed;
       bottom: 20px;
@@ -332,23 +298,20 @@
       animation: donationGlow 2.5s ease-in-out infinite;
       border: 2px solid rgba(255,255,255,0.3);
     }
-
     @keyframes donationGlow {
-      0%, 100% { 
+      0%, 100% {
         transform: scale(1);
         box-shadow: 0 8px 25px rgba(255,107,53,0.5);
       }
-      50% { 
+      50% {
         transform: scale(1.05);
         box-shadow: 0 12px 35px rgba(255,107,53,0.8);
       }
     }
-
     .donation-btn:active {
       animation: none;
       transform: scale(0.9);
     }
-
     .overlay {
       position: fixed;
       top: 0;
@@ -364,13 +327,11 @@
       opacity: 0;
       transition: opacity 0.5s ease, visibility 0.5s ease;
     }
-
     .overlay.show {
       display: flex;
       opacity: 1;
       visibility: visible;
     }
-
     .modal, .donation-modal {
       background: linear-gradient(135deg, rgba(0,8,20,0.95), rgba(0,17,34,0.95));
       border: 2px solid #ffd700;
@@ -385,41 +346,34 @@
       opacity: 0;
       transition: transform 0.5s ease, opacity 0.5s ease;
     }
-
     .donation-modal {
       width: 380px;
       border: 3px solid #ffd700;
     }
-
     .overlay.show .modal, .overlay.show .donation-modal {
       transform: scale(1);
       opacity: 1;
     }
-
     @keyframes modalGlow {
       0%, 100% { box-shadow: 0 0 30px rgba(255,215,0,0.5); }
       50% { box-shadow: 0 0 50px rgba(255,215,0,0.8); }
     }
-
     .modal-icon {
       width: 60px;
       height: 60px;
       margin: 0 auto 20px;
     }
-
     .modal h2 {
       color: #ffd700;
       font-weight: 700;
       margin: 0 0 15px;
       font-size: 1.3rem;
     }
-
     .modal p {
       color: #cccccc;
       margin: 0 0 25px;
       font-size: 0.95rem;
     }
-
     .modal-btn {
       background: linear-gradient(45deg, #ffd700, #b8860b);
       color: #000814;
@@ -430,12 +384,10 @@
       margin: 5px;
       transition: all 0.3s ease;
     }
-
     .modal-btn:active {
       transform: scale(0.95);
       box-shadow: 0 5px 15px rgba(255,215,0,0.7);
     }
-
     .close-x {
       position: absolute;
       top: 15px;
@@ -446,19 +398,16 @@
       font-size: 1.8rem;
       font-weight: bold;
     }
-
     .close-x:active {
       color: #fff;
       transform: scale(1.2);
     }
-
     .payment-buttons {
       display: flex;
       flex-direction: column;
       gap: 15px;
       margin-top: 20px;
     }
-
     .payment-btn {
       background: linear-gradient(45deg, #ffd700, #b8860b);
       color: #000814;
@@ -473,12 +422,10 @@
       justify-content: center;
       gap: 10px;
     }
-
     .payment-btn:active {
       transform: scale(0.95);
       box-shadow: 0 5px 20px rgba(255,215,0,0.7);
     }
-
     @media (max-width: 480px) {
       .logo { font-size: 1.8rem; }
       .profile-img { width: 100px; height: 100px; }
@@ -493,9 +440,8 @@
 </head>
 <body>
   <button class="browser-warning-btn" onclick="showBrowserWarning()">
-    ⚠️ Aviso 
+    ⚠️ Aviso
   </button>
-
   <header>
     <h1 class="logo">@YOSOYTONYHXP</h1>
     <div class="profile-section">
@@ -507,8 +453,15 @@
       </div>
     </div>
   </header>
-
   <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-notice">Temporal</div>
+      <img src="proy1/7.jpg" alt="Apoya a Perú - Concurso de Comida" class="card-image">
+      <div class="card-body">
+        <h3 class="project-title">APOYA A PERÚ - CONCURSO DE COMIDA</h3>
+        <a href="https://anthony-cup.github.io/bota7porperu-mundialdesayuno-yosoytonyhxp/" target="_blank" class="project-btn">🇵🇪 VOTAR</a>
+      </div>
+    </div>
     <div class="project-card">
       <div class="project-notice">¡Personaliza tu link!</div>
       <img src="proy1/6.jpg" alt="Túnel de recuerdos" class="card-image">
@@ -517,7 +470,6 @@
         <a href="https://tunel-de-recuerdos.web.app/" target="_blank" class="project-btn">🚀 EXPLORAR</a>
       </div>
     </div>
-
     <div class="project-card">
       <div class="project-notice">¡Personaliza tu link!</div>
       <img src="proy1/5.jpg" alt="Galaxia Personalizada" class="card-image">
@@ -526,7 +478,6 @@
         <a href="https://anthony-cup.github.io/resubidoUniversoPersonalizado/" target="_blank" class="project-btn">🌌 DESCUBRIR</a>
       </div>
     </div>
-
     <div class="project-card">
       <div class="project-notice">¡Personaliza tu link!</div>
       <img src="proy1/4.jpg" alt="Pistola de Corazones" class="card-image">
@@ -535,7 +486,6 @@
         <a href="https://compartir-ling.web.app" target="_blank" class="project-btn">💛 JUGAR</a>
       </div>
     </div>
-
     <div class="project-card">
       <img src="proy1/3.png" alt="Declaración especial" class="card-image">
       <div class="card-body">
@@ -543,7 +493,6 @@
         <a href="https://anthony-cup.github.io/declaracion-bonito-autor-tonyrealjs/" target="_blank" class="project-btn">💫 VER MAGIA</a>
       </div>
     </div>
-
     <div class="project-card">
       <img src="proy1/2.jpg" alt="Carta Sorpresa" class="card-image">
       <div class="card-body">
@@ -551,7 +500,6 @@
         <a href="https://anthony-cup.github.io/mi-web-anthony/" target="_blank" class="project-btn">📜 LEER</a>
       </div>
     </div>
-
     <div class="project-card">
       <img src="proy1/1.jpg" alt="Proyecto NANOTEC" class="card-image">
       <div class="card-body">
@@ -560,15 +508,12 @@
       </div>
     </div>
   </div>
-
   <div class="floating-popup" onclick="showWhatsAppModal()">
     💬 Canal
   </div>
-
   <div class="donation-btn" onclick="showDonationModal()">
     💝 Donar
   </div>
-
   <!-- Modal de Donación -->
   <div class="overlay" id="donation-modal">
     <div class="donation-modal">
@@ -586,7 +531,6 @@
       <button class="modal-btn" onclick="hideDonationModal()" style="background: rgba(255,215,0,0.2); color: #ffd700; margin-top: 15px;">CONTINUAR</button>
     </div>
   </div>
-
   <!-- Modal de Yape -->
   <div class="overlay" id="yape-modal">
     <div class="modal">
@@ -597,7 +541,6 @@
       <button class="modal-btn" onclick="hideYapeModal()">CERRAR</button>
     </div>
   </div>
-
   <!-- Modal de Navegador -->
   <div class="overlay" id="browser-modal">
     <div class="modal">
@@ -611,7 +554,6 @@
       <button class="modal-btn" onclick="hideBrowserModal()">ENTENDIDO</button>
     </div>
   </div>
-
   <!-- Modal de WhatsApp -->
   <div class="overlay" id="whatsapp-modal">
     <div class="modal">
@@ -625,14 +567,12 @@
       <button class="modal-btn" onclick="hideWhatsAppModal()" style="background: rgba(255,215,0,0.2); color: #ffd700;">DESPUÉS</button>
     </div>
   </div>
-
   <script>
     function showDonationModal() {
       const modal = document.getElementById('donation-modal');
       modal.style.display = 'flex';
       setTimeout(() => modal.classList.add('show'), 10);
     }
-
     function hideDonationModal() {
       const modal = document.getElementById('donation-modal');
       modal.classList.remove('show');
@@ -641,62 +581,51 @@
         showWhatsAppModal();
       }, 500);
     }
-
     function showYape() {
       const modal = document.getElementById('yape-modal');
       modal.style.display = 'flex';
       setTimeout(() => modal.classList.add('show'), 10);
     }
-
     function hideYapeModal() {
       const modal = document.getElementById('yape-modal');
       modal.classList.remove('show');
       setTimeout(() => modal.style.display = 'none', 500);
     }
-
     function openPayPal() {
       window.open('https://paypal.me/tonyhxp', '_blank');
       hideDonationModal();
     }
-
     function showBrowserWarning() {
       const modal = document.getElementById('browser-modal');
       modal.style.display = 'flex';
       setTimeout(() => modal.classList.add('show'), 10);
     }
-
     function hideBrowserModal() {
       const modal = document.getElementById('browser-modal');
       modal.classList.remove('show');
       setTimeout(() => modal.style.display = 'none', 500);
     }
-
     function showWhatsAppModal() {
       const modal = document.getElementById('whatsapp-modal');
       modal.style.display = 'flex';
       setTimeout(() => modal.classList.add('show'), 10);
     }
-
     function hideWhatsAppModal() {
       const modal = document.getElementById('whatsapp-modal');
       modal.classList.remove('show');
       setTimeout(() => modal.style.display = 'none', 500);
     }
-
     function openWhatsApp() {
       window.open('https://whatsapp.com/channel/0029VbB5RALId7nHMW3BYj0c', '_blank');
       hideWhatsAppModal();
     }
-
     setTimeout(showDonationModal, 3000);
-
     document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('.project-card').forEach(card => {
         card.addEventListener('touchstart', function() {
           this.style.transform = 'scale(0.95)';
           this.style.filter = 'brightness(1.2)';
         });
-        
         card.addEventListener('touchend', function() {
           this.style.transform = 'scale(1)';
           this.style.filter = 'brightness(1)';
@@ -706,4 +635,3 @@
   </script>
 </body>
 </html>
-
