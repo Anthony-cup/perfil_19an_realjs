@@ -436,50 +436,9 @@
       .floating-popup, .donation-btn { font-size: 0.7rem; padding: 10px 15px; }
       .project-notice { font-size: 0.7rem; padding: 4px 12px; }
     }
-
-    /* Loading styles */
-    #loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 3000;
-      transition: opacity 0.5s ease;
-    }
-
-    #loading-overlay.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .loader {
-      border: 16px solid #f3f3f3;
-      border-top: 16px solid #ffd700;
-      border-radius: 50%;
-      width: 120px;
-      height: 120px;
-      animation: spin 2s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
   </style>
 </head>
 <body>
-  <!-- Loading Overlay -->
-  <div id="loading-overlay">
-    <div class="loader"></div>
-    <p style="color: white; margin-top: 20px;">Cargando...</p>
-  </div>
-
   <button class="browser-warning-btn" onclick="showBrowserWarning()">
     ⚠️ Aviso
   </button>
@@ -640,203 +599,7 @@
       <button class="modal-btn" onclick="hideWhatsAppModal()" style="background: rgba(255,215,0,0.2); color: #ffd700;">DESPUÉS</button>
     </div>
   </div>
-  <!-- Nuevo Modal para Ingresar -->
-  <div class="overlay" id="ingresar-modal">
- <div class="modal">
-  <h2 style="color: #ffd700;">¡Bienvenido!</h2>
-  <p style="color: #cccccc;">
-    Gracias por visitar mi página. Aquí podrás ver todos mis proyectos gratis.  
-    Este mensaje solo aparecerá una vez si eres nuevo. ¡Disfruta tu visita!
-  </p>
-  <button class="modal-btn" id="ingresar-btn">Entrar</button>
-</div>
-
-  </div>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-    import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCS1fl0K2dDAfA6VS5O945Z35nhTyoSNYA",
-      authDomain: "perfil-tiktok-nuevos.firebaseapp.com",
-      databaseURL: "https://perfil-tiktok-nuevos-default-rtdb.firebaseio.com",
-      projectId: "perfil-tiktok-nuevos",
-      storageBucket: "perfil-tiktok-nuevos.firebasestorage.app",
-      messagingSenderId: "169664779049",
-      appId: "1:169664779049:web:5973fba974e08429361d38",
-      measurementId: "G-96HHYP579Y"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // Función para leer cookies del navegador (busca por nombre exacto)
-    function readCookie(name){ const parts = document.cookie.split(';').map(s=>s.trim()); for(const p of parts){ if(p.startsWith(name+'=')) return p.split('=')[1]; } return null; }
-    
-    // Función para setear cookies con expiración y flags para cross-site (SameSite=None;Secure para GitHub Pages HTTPS)
-    function setCookie(name,value,expiresMs){ const d = new Date(Date.now()+expiresMs); document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/;SameSite=None;Secure`; }
-    
-    // Función para generar secreto aleatorio para cookie (32 chars hex)
-    function makeCookieSecret(){ const arr = new Uint8Array(16); crypto.getRandomValues(arr); return Array.from(arr).map(b=>b.toString(16).padStart(2,'0')).join(''); }
-
-    // Función para obtener fingerprint del dispositivo (sin IP para evitar fallos en fetch)
-    function getDeviceFingerprint() {
-      return {
-        userAgent: navigator.userAgent || 'unknown',
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown',
-        language: navigator.language || 'unknown',
-        screenRes: `${screen.width}x${screen.height}` || 'unknown',
-        platform: navigator.platform || 'unknown'
-      };
-    }
-
-    // Función para calcular score de validación (sin IP, 5 factores, threshold 60% para más leniencia cross-site)
-    function calculateValidationScore(data, currentFingerprint) {
-      const cookie = readCookie('ingresar_secret');
-      let score = 0;
-      let reasons = [];
-      let matchedFactors = 0;
-
-      // Chequeo cookie (20 puntos) - Opcional cross-site
-      if (cookie && cookie === data.cookieSecret) {
-        score += 20;
-        matchedFactors++;
-        reasons.push('Cookie match');
-      } else {
-        reasons.push('Cookie no match');
-      }
-
-      // Chequeo userAgent (20 puntos)
-      if (data.activatorMeta && data.activatorMeta.userAgent === currentFingerprint.userAgent) {
-        score += 20;
-        matchedFactors++;
-        reasons.push('UserAgent match');
-      } else {
-        reasons.push('UserAgent no match');
-      }
-
-      // Chequeo timezone (20 puntos)
-      if (data.activatorMeta && data.activatorMeta.timezone === currentFingerprint.timezone) {
-        score += 20;
-        matchedFactors++;
-        reasons.push('Timezone match');
-      } else {
-        reasons.push('Timezone no match');
-      }
-
-      // Chequeo language (20 puntos)
-      if (data.activatorMeta && data.activatorMeta.language === currentFingerprint.language) {
-        score += 20;
-        matchedFactors++;
-        reasons.push('Language match');
-      } else {
-        reasons.push('Language no match');
-      }
-
-      // Chequeo screenRes/platform (20 puntos - combinado para simplicidad)
-      const savedRes = data.activatorMeta?.screenRes;
-      const savedPlat = data.activatorMeta?.platform;
-      const currentRes = currentFingerprint.screenRes;
-      const currentPlat = currentFingerprint.platform;
-      if ((savedRes === currentRes || savedPlat === currentPlat) && data.activatorMeta) { // Tolerancia: match en res O platform
-        score += 20;
-        matchedFactors++;
-        reasons.push('Screen/platform match');
-      } else {
-        reasons.push('Screen/platform no match');
-      }
-
-      const percentage = Math.round(score);
-      return { score, percentage, isValid: percentage >= 60, reasons, matchedFactors };
-    }
-
-    // Función para mostrar el modal de ingresar
-    function showIngresarModal() {
-      const modal = document.getElementById('ingresar-modal');
-      modal.style.display = 'flex';
-      setTimeout(() => modal.classList.add('show'), 10);
-    }
-
-    // Función para ocultar el modal de ingresar
-    function hideIngresarModal() {
-      const modal = document.getElementById('ingresar-modal');
-      modal.classList.remove('show');
-      setTimeout(() => modal.style.display = 'none', 500);
-    }
-
-    // Lógica principal al cargar la página
-    async function checkUserRegistration() {
-      const loadingOverlay = document.getElementById('loading-overlay');
-      loadingOverlay.style.display = 'flex'; // Mostrar loading
-
-      const userID = readCookie('ingresar_userid');
-      const currentFingerprint = getDeviceFingerprint();
-
-      let isRegistered = false;
-
-      if (userID) {
-        try {
-          const snap = await get(ref(db, 'users/' + userID));
-          if (snap.exists()) {
-            const data = snap.val();
-            const { isValid } = calculateValidationScore(data, currentFingerprint);
-            if (isValid) {
-              isRegistered = true;
-            }
-          }
-        } catch (e) {
-          console.error('Error al verificar usuario:', e);
-        }
-      }
-
-      // Ocultar loading después de la verificación
-      loadingOverlay.classList.add('hidden');
-      setTimeout(() => {
-        loadingOverlay.style.display = 'none';
-      }, 500);
-
-      if (!isRegistered) {
-        showIngresarModal();
-      }
-    }
-
-    // Event listener para el botón de ingresar
-    document.getElementById('ingresar-btn').addEventListener('click', async () => {
-      try {
-        const userID = makeCookieSecret(); // Generar ID único
-        const cookieSecret = makeCookieSecret();
-        const currentFingerprint = getDeviceFingerprint();
-        const now = Date.now();
-
-        await update(ref(db, 'users/' + userID), { 
-          cookieSecret, 
-          createdAt: now, 
-          activatorMeta: { 
-            userAgent: currentFingerprint.userAgent,
-            timezone: currentFingerprint.timezone,
-            language: currentFingerprint.language,
-            screenRes: currentFingerprint.screenRes,
-            platform: currentFingerprint.platform
-          }
-        });
-
-        // Establecer cookies (1 año)
-        setCookie('ingresar_userid', userID, 365 * 24 * 60 * 60 * 1000);
-        setCookie('ingresar_secret', cookieSecret, 365 * 24 * 60 * 60 * 1000);
-
-        // Redirigir a WhatsApp
-        window.open('https://whatsapp.com/channel/0029VbB5RALId7nHMW3BYj0c', '_blank');
-      } catch (e) {
-        console.error('Error al registrar usuario:', e);
-      } finally {
-        hideIngresarModal();
-      }
-    });
-
-    // Llamar a la verificación al cargar
-    checkUserRegistration();
-
-    // Resto de scripts existentes
+  <script>
     function showDonationModal() {
       const modal = document.getElementById('donation-modal');
       modal.style.display = 'flex';
@@ -847,7 +610,7 @@
       modal.classList.remove('show');
       setTimeout(() => {
         modal.style.display = 'none';
-        // Removido showWhatsAppModal() para evitar duplicados
+        showWhatsAppModal();
       }, 500);
     }
     function showYape() {
@@ -903,4 +666,5 @@
     });
   </script>
 </body>
-</html> 
+</html>
+
