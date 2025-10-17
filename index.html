@@ -1,932 +1,919 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>@yosoytonyhxp - Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Orbitron', monospace;
-      background: radial-gradient(circle at center, #000814, #001122);
-      color: #ffd700;
-      overflow-x: hidden;
-      position: relative;
-    }
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="1" fill="%23ffd700" opacity="0.1"><animate attributeName="opacity" values="0.1;0.5;0.1" dur="3s" repeatCount="indefinite"/></circle><circle cx="75" cy="50" r="1" fill="%23ffd700" opacity="0.2"><animate attributeName="opacity" values="0.2;0.6;0.2" dur="4s" repeatCount="indefinite"/></circle><circle cx="50" cy="75" r="1" fill="%23ffd700" opacity="0.15"><animate attributeName="opacity" values="0.15;0.4;0.15" dur="5s" repeatCount="indefinite"/></circle></svg>') repeat;
-      pointer-events: none;
-      z-index: 0;
-    }
-    header {
-      text-align: center;
-      padding: 25px 15px;
-      background: linear-gradient(135deg, rgba(0,8,20,0.95), rgba(0,17,34,0.95));
-      backdrop-filter: blur(10px);
-      border-bottom: 3px solid #ffd700;
-      position: relative;
-      z-index: 1;
-    }
-    .logo {
-      font-size: 2.2rem;
-      font-weight: 900;
-      background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: goldShine 2s ease-in-out infinite;
-      margin-bottom: 15px;
-      letter-spacing: 4px;
-    }
-    @keyframes goldShine {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-    .profile-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 20px 0;
-    }
-    .profile-img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 4px solid #ffd700;
-      box-shadow: 0 0 30px rgba(255,215,0,0.6);
-      object-fit: cover;
-      animation: orbitGlow 3s ease-in-out infinite;
-    }
-    @keyframes orbitGlow {
-      0%, 100% {
-        box-shadow: 0 0 30px rgba(255,215,0,0.6), inset 0 0 20px rgba(255,215,0,0.2);
-        transform: scale(1);
-      }
-      50% {
-        box-shadow: 0 0 50px rgba(255,215,0,0.8), inset 0 0 30px rgba(255,215,0,0.4);
-        transform: scale(1.05);
-      }
-    }
-    .social-bar {
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      margin: 20px 0;
-    }
-    .social-btn {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,215,0,0.1));
-      border: 2px solid #ffd700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffd700;
-      font-size: 1.4rem;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      text-decoration: none;
-    }
-    .social-btn::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: conic-gradient(transparent, rgba(255,215,0,0.3), transparent);
-      animation: rotate 3s linear infinite;
-      z-index: -1;
-    }
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .social-btn:active {
-      transform: scale(0.9);
-      box-shadow: 0 0 25px rgba(255,215,0,0.8);
-    }
-    .projects-grid {
-      padding: 20px 15px;
-      max-width: 500px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-    .project-card {
-      background: linear-gradient(135deg, rgba(0,8,20,0.8), rgba(0,17,34,0.6));
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255,215,0,0.3);
-      border-radius: 20px;
-      margin-bottom: 25px;
-      overflow: hidden;
-      position: relative;
-      transition: all 0.4s ease;
-    }
-    .project-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,215,0,0.1), transparent);
-      animation: sweep 4s ease-in-out infinite;
-    }
-    @keyframes sweep {
-      0%, 100% { left: -100%; }
-      50% { left: 100%; }
-    }
-    .project-card:active {
-      transform: translateY(-8px) scale(0.98);
-      border-color: #ffd700;
-      box-shadow: 0 15px 40px rgba(255,215,0,0.4);
-    }
-    .card-image {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      filter: brightness(0.9) contrast(1.1);
-    }
-    .card-body {
-      padding: 20px;
-      text-align: center;
-    }
-    .project-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin: 0 0 15px 0;
-      background: linear-gradient(45deg, #ffd700, #ffed4e);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: textPulse 2s ease-in-out infinite;
-    }
-    @keyframes textPulse {
-      0%, 100% { opacity: 0.9; }
-      50% { opacity: 1; }
-    }
-    .project-btn {
-      background: linear-gradient(45deg, #ffd700, #b8860b);
-      color: #000814;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 25px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-    }
-    .project-btn::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(255,255,255,0.3);
-      border-radius: 50%;
-      transition: all 0.5s ease;
-      transform: translate(-50%, -50%);
-    }
-    .project-btn:active::after {
-      width: 300px;
-      height: 300px;
-    }
-    .project-btn:active {
-      transform: scale(0.95);
-      box-shadow: 0 5px 20px rgba(255,215,0,0.6);
-    }
-    .project-notice {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(45deg, #ffd700, #b8860b);
-      color: #000814;
-      padding: 5px 15px;
-      border-radius: 15px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      z-index: 2;
-      box-shadow: 0 3px 10px rgba(255,215,0,0.5);
-      animation: noticeGlow 2s ease-in-out infinite;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-    @keyframes noticeGlow {
-      0%, 100% { box-shadow: 0 3px 10px rgba(255,215,0,0.5); }
-      50% { box-shadow: 0 5px 15px rgba(255,215,0,0.8); }
-    }
-    .browser-warning-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background: linear-gradient(45deg, #ff6b35, #f7931e);
-      color: white;
-      border: none;
-      border-radius: 50px;
-      padding: 10px 15px;
-      font-weight: 700;
-      font-size: 0.7rem;
-      z-index: 1500;
-      animation: warningPulse 2s ease-in-out infinite;
-      box-shadow: 0 5px 15px rgba(255,107,53,0.5);
-    }
-    @keyframes warningPulse {
-      0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 5px 15px rgba(255,107,53,0.5);
-      }
-      50% {
-        transform: scale(1.1);
-        box-shadow: 0 8px 25px rgba(255,107,53,0.8);
-      }
-    }
-    .browser-warning-btn:active {
-      animation: none;
-      transform: scale(0.95);
-    }
-    .floating-popup {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background: linear-gradient(135deg, #ffd700, #b8860b);
-      color: #000814;
-      padding: 12px 18px;
-      border-radius: 50px;
-      box-shadow: 0 8px 25px rgba(255,215,0,0.5);
-      font-weight: 700;
-      font-size: 0.8rem;
-      z-index: 1000;
-      animation: bounce 2s ease-in-out infinite;
-      border: 2px solid rgba(255,255,255,0.3);
-      cursor: pointer;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-10px) scale(1.05); }
-    }
-    .floating-popup:active {
-      animation: none;
-      transform: scale(0.9);
-    }
-    .donation-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: linear-gradient(135deg, #ff6b35, #f7931e);
-      color: white;
-      padding: 12px 18px;
-      border-radius: 50px;
-      box-shadow: 0 8px 25px rgba(255,107,53,0.5);
-      font-weight: 700;
-      font-size: 0.8rem;
-      z-index: 1000;
-      animation: donationGlow 2.5s ease-in-out infinite;
-      border: 2px solid rgba(255,255,255,0.3);
-      cursor: pointer;
-    }
-    @keyframes donationGlow {
-      0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 8px 25px rgba(255,107,53,0.5);
-      }
-      50% {
-        transform: scale(1.05);
-        box-shadow: 0 12px 35px rgba(255,107,53,0.8);
-      }
-    }
-    .donation-btn:active {
-      animation: none;
-      transform: scale(0.9);
-    }
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.9);
-      backdrop-filter: blur(10px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-    .overlay.show {
-      display: flex;
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .modal, .donation-modal {
-      background: linear-gradient(135deg, rgba(0,8,20,0.95), rgba(0,17,34,0.95));
-      border: 2px solid #ffd700;
-      border-radius: 25px;
-      padding: 30px;
-      text-align: center;
-      max-width: 90%;
-      width: 350px;
-      position: relative;
-      animation: modalGlow 3s ease-in-out infinite;
-      transform: scale(0.8);
-      opacity: 0;
-      transition: transform 0.5s ease, opacity 0.5s ease;
-    }
-    .donation-modal {
-      width: 380px;
-      border: 3px solid #ffd700;
-    }
-    .overlay.show .modal, .overlay.show .donation-modal {
-      transform: scale(1);
-      opacity: 1;
-    }
-    @keyframes modalGlow {
-      0%, 100% { box-shadow: 0 0 30px rgba(255,215,0,0.5); }
-      50% { box-shadow: 0 0 50px rgba(255,215,0,0.8); }
-    }
-    .modal-icon {
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 20px;
-    }
-    .modal h2 {
-      color: #ffd700;
-      font-weight: 700;
-      margin: 0 0 15px;
-      font-size: 1.3rem;
-    }
-    .modal p {
-      color: #cccccc;
-      margin: 0 0 25px;
-      font-size: 0.95rem;
-    }
-    .modal-btn {
-      background: linear-gradient(45deg, #ffd700, #b8860b);
-      color: #000814;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 25px;
-      font-weight: 700;
-      margin: 5px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    .modal-btn:active {
-      transform: scale(0.95);
-      box-shadow: 0 5px 15px rgba(255,215,0,0.7);
-    }
-    .close-x {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      background: none;
-      border: none;
-      color: #ffd700;
-      font-size: 1.8rem;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .close-x:active {
-      color: #fff;
-      transform: scale(1.2);
-    }
-    .payment-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-top: 20px;
-    }
-    .payment-btn {
-      background: linear-gradient(45deg, #ffd700, #b8860b);
-      color: #000814;
-      padding: 15px 25px;
-      border: none;
-      border-radius: 25px;
-      font-weight: 700;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      cursor: pointer;
-    }
-    .payment-btn:active {
-      transform: scale(0.95);
-      box-shadow: 0 5px 20px rgba(255,215,0,0.7);
-    }
-    @media (max-width: 480px) {
-      .logo { font-size: 1.8rem; }
-      .profile-img { width: 100px; height: 100px; }
-      .card-image { height: 180px; }
-      .project-title { font-size: 1.1rem; }
-      .modal { padding: 25px 20px; }
-      .browser-warning-btn { font-size: 0.6rem; padding: 8px 12px; }
-      .floating-popup, .donation-btn { font-size: 0.7rem; padding: 10px 15px; }
-      .project-notice { font-size: 0.7rem; padding: 4px 12px; }
-    }
-
-    /* Loading styles */
-    #loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 3000;
-      transition: opacity 0.5s ease;
-    }
-
-    #loading-overlay.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .loader {
-      border: 16px solid #f3f3f3;
-      border-top: 16px solid #ffd700;
-      border-radius: 50%;
-      width: 120px;
-      height: 120px;
-      animation: spin 2s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@yosoytonyhxp - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Orbitron', monospace;
+            background: radial-gradient(circle at center, #000814, #001122);
+            color: #ffd700;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="1" fill="%23ffd700" opacity="0.1"><animate attributeName="opacity" values="0.1;0.5;0.1" dur="3s" repeatCount="indefinite"/></circle><circle cx="75" cy="50" r="1" fill="%23ffd700" opacity="0.2"><animate attributeName="opacity" values="0.2;0.6;0.2" dur="4s" repeatCount="indefinite"/></circle><circle cx="50" cy="75" r="1" fill="%23ffd700" opacity="0.15"><animate attributeName="opacity" values="0.15;0.4;0.15" dur="5s" repeatCount="indefinite"/></circle></svg>') repeat;
+            pointer-events: none;
+            z-index: 0;
+        }
+        header {
+            text-align: center;
+            padding: 25px 15px;
+            background: linear-gradient(135deg, rgba(0,8,20,0.95), rgba(0,17,34,0.95));
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid #ffd700;
+            position: relative;
+            z-index: 1;
+        }
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: goldShine 2s ease-in-out infinite;
+            margin-bottom: 15px;
+            letter-spacing: 4px;
+        }
+        @keyframes goldShine {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #ffd700;
+            box-shadow: 0 0 30px rgba(255,215,0,0.6);
+            object-fit: cover;
+            animation: orbitGlow 3s ease-in-out infinite;
+        }
+        @keyframes orbitGlow {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(255,215,0,0.6), inset 0 0 20px rgba(255,215,0,0.2);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 50px rgba(255,215,0,0.8), inset 0 0 30px rgba(255,215,0,0.4);
+                transform: scale(1.05);
+            }
+        }
+        .social-bar {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 20px 0;
+        }
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,215,0,0.1));
+            border: 2px solid #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffd700;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, rgba(255,215,0,0.3), transparent);
+            animation: rotate 3s linear infinite;
+            z-index: -1;
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .social-btn:active {
+            transform: scale(0.9);
+            box-shadow: 0 0 25px rgba(255,215,0,0.8);
+        }
+        .projects-grid {
+            padding: 20px 15px;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .project-card {
+            background: linear-gradient(135deg, rgba(0,8,20,0.8), rgba(0,17,34,0.6));
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 20px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.1), transparent);
+            animation: sweep 4s ease-in-out infinite;
+        }
+        @keyframes sweep {
+            0%, 100% { left: -100%; }
+            50% { left: 100%; }
+        }
+        .project-card:active {
+            transform: translateY(-8px) scale(0.98);
+            border-color: #ffd700;
+            box-shadow: 0 15px 40px rgba(255,215,0,0.4);
+        }
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            filter: brightness(0.9) contrast(1.1);
+            cursor: pointer;
+        }
+        .card-body {
+            padding: 20px;
+            text-align: center;
+        }
+        .project-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textPulse 2s ease-in-out infinite;
+        }
+        @keyframes textPulse {
+            0%, 100% { opacity: 0.9; }
+            50% { opacity: 1; }
+        }
+        .project-btn {
+            background: linear-gradient(45deg, #ffd700, #b8860b);
+            color: #000814;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .project-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transition: all 0.5s ease;
+            transform: translate(-50%, -50%);
+        }
+        .project-btn:active::after {
+            width: 300px;
+            height: 300px;
+        }
+        .project-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 5px 20px rgba(255,215,0,0.6);
+        }
+        .project-notice {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #ffd700, #b8860b);
+            color: #000814;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 3px 10px rgba(255,215,0,0.5);
+            animation: noticeGlow 2s ease-in-out infinite;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        @keyframes noticeGlow {
+            0%, 100% { box-shadow: 0 3px 10px rgba(255,215,0,0.5); }
+            50% { box-shadow: 0 5px 15px rgba(255,215,0,0.8); }
+        }
+        .browser-warning-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 15px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            z-index: 1500;
+            animation: warningPulse 2s ease-in-out infinite;
+            box-shadow: 0 5px 15px rgba(255,107,53,0.5);
+        }
+        @keyframes warningPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(255,107,53,0.5);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 8px 25px rgba(255,107,53,0.8);
+            }
+        }
+        .browser-warning-btn:active {
+            animation: none;
+            transform: scale(0.95);
+        }
+        .floating-popup {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #ffd700, #b8860b);
+            color: #000814;
+            padding: 12px 18px;
+            border-radius: 50px;
+            box-shadow: 0 8px 25px rgba(255,215,0,0.5);
+            font-weight: 700;
+            font-size: 0.8rem;
+            z-index: 1000;
+            animation: bounce 2s ease-in-out infinite;
+            border: 2px solid rgba(255,255,255,0.3);
+            cursor: pointer;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+        .floating-popup:active {
+            animation: none;
+            transform: scale(0.9);
+        }
+        .donation-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 50px;
+            box-shadow: 0 8px 25px rgba(255,107,53,0.5);
+            font-weight: 700;
+            font-size: 0.8rem;
+            z-index: 1000;
+            animation: donationGlow 2.5s ease-in-out infinite;
+            border: 2px solid rgba(255,255,255,0.3);
+            cursor: pointer;
+        }
+        @keyframes donationGlow {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 8px 25px rgba(255,107,53,0.5);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 12px 35px rgba(255,107,53,0.8);
+            }
+        }
+        .donation-btn:active {
+            animation: none;
+            transform: scale(0.9);
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .overlay.show {
+            display: flex;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal, .donation-modal {
+            background: linear-gradient(135deg, rgba(0,8,20,0.95), rgba(0,17,34,0.95));
+            border: 2px solid #ffd700;
+            border-radius: 25px;
+            padding: 30px;
+            text-align: center;
+            max-width: 90%;
+            width: 350px;
+            position: relative;
+            animation: modalGlow 3s ease-in-out infinite;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+        .donation-modal {
+            width: 380px;
+            border: 3px solid #ffd700;
+        }
+        .overlay.show .modal, .overlay.show .donation-modal {
+            transform: scale(1);
+            opacity: 1;
+        }
+        @keyframes modalGlow {
+            0%, 100% { box-shadow: 0 0 30px rgba(255,215,0,0.5); }
+            50% { box-shadow: 0 0 50px rgba(255,215,0,0.8); }
+        }
+        .modal-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+        }
+        .modal h2 {
+            color: #ffd700;
+            font-weight: 700;
+            margin: 0 0 15px;
+            font-size: 1.3rem;
+        }
+        .modal p {
+            color: #cccccc;
+            margin: 0 0 25px;
+            font-size: 0.95rem;
+        }
+        .modal-btn {
+            background: linear-gradient(45deg, #ffd700, #b8860b);
+            color: #000814;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            margin: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .modal-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 5px 15px rgba(255,215,0,0.7);
+        }
+        .close-x {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #ffd700;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-x:active {
+            color: #fff;
+            transform: scale(1.2);
+        }
+        .payment-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .payment-btn {
+            background: linear-gradient(45deg, #ffd700, #b8860b);
+            color: #000814;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .payment-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 5px 20px rgba(255,215,0,0.7);
+        }
+        @media (max-width: 480px) {
+            .logo { font-size: 1.8rem; }
+            .profile-img { width: 100px; height: 100px; }
+            .card-image { height: 180px; }
+            .project-title { font-size: 1.1rem; }
+            .modal { padding: 25px 20px; }
+            .browser-warning-btn { font-size: 0.6rem; padding: 8px 12px; }
+            .floating-popup, .donation-btn { font-size: 0.7rem; padding: 10px 15px; }
+            .project-notice { font-size: 0.7rem; padding: 4px 12px; }
+        }
+        /* Loading styles */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            transition: opacity 0.5s ease;
+        }
+        #loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #ffd700;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-  <!-- Loading Overlay -->
-  <div id="loading-overlay">
-    <div class="loader"></div>
-    <p style="color: white; margin-top: 20px;">Cargando...</p>
-  </div>
-
-  <button class="browser-warning-btn" onclick="showBrowserWarning()">
-    ⚠️ Aviso
-  </button>
-  <header>
-    <h1 class="logo">@YOSOYTONYHXP</h1>
-    <div class="profile-section">
-      <img src="perfil/perfil.jpg" alt="Perfil" class="profile-img">
-      <div class="social-bar">
-        <a href="#" class="social-btn"><i class="fab fa-x-twitter"></i></a>
-        <a href="https://www.tiktok.com/@yosoytonyhxp?is_from_webapp=1&sender_device=pc" target="_blank" class="social-btn"><i class="fab fa-tiktok"></i></a>
-        <a href="#" class="social-btn"><i class="fab fa-github"></i></a>
-      </div>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="loader"></div>
+        <p style="color: white; margin-top: 20px;">Cargando...</p>
     </div>
-  </header>
-  <div class="projects-grid">
-    <div class="project-card">
-      <div class="project-notice">¡Personaliza tu link!</div>
-      <img src="proy1/10.jpg" alt="6 cartas de perdon" class="card-image">
-      <div class="card-body">
-        <h3 class="project-title">6 CARTAS DE PERDON "Nuevo"</h3>
-        <a href="https://anthoyeje.github.io/panel-6cartas-de-perdon/" target="_blank" class="project-btn">Abrir</a>
-      </div>
+    <button class="browser-warning-btn" onclick="showBrowserWarning()">
+        ⚠️ Aviso
+    </button>
+    <header>
+        <h1 class="logo">@YOSOYTONYHXP</h1>
+        <div class="profile-section">
+            <img src="perfil/perfil.jpg" alt="Perfil" class="profile-img">
+            <div class="social-bar">
+                <a href="#" class="social-btn"><i class="fab fa-x-twitter"></i></a>
+                <a href="https://www.tiktok.com/@yosoytonyhxp?is_from_webapp=1&sender_device=pc" target="_blank" class="social-btn"><i class="fab fa-tiktok"></i></a>
+                <a href="#" class="social-btn"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </header>
+    <div class="projects-grid">
+        <div class="project-card">
+            <div class="project-notice">¡Nuevo Proyecto!</div>
+            <img src="proy1/11.jpg" alt="Amor en el vacío" class="card-image" onclick="showImageModal(this.src)">
+            <div class="card-body">
+                <h3 class="project-title">AMOR EN EL VACÍO</h3>
+                <a href="https://example.com/nuevo-proyecto" target="_blank" class="project-btn">Abrir</a>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-notice">¡Personaliza tu link!</div>
+            <img src="proy1/10.jpg" alt="6 cartas de perdon" class="card-image" onclick="showImageModal(this.src)">
+            <div class="card-body">
+                <h3 class="project-title">6 CARTAS DE PERDON "Nuevo"</h3>
+                <a href="https://anthoyeje.github.io/panel-6cartas-de-perdon/" target="_blank" class="project-btn">Abrir</a>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-notice">¡Personaliza tu link!</div>
+            <img src="proy1/9.jpg" alt="Baile de Conquista" class="card-image" onclick="showImageModal(this.src)">
+            <div class="card-body">
+                <h3 class="project-title">BAILE DE CONQUISTA "Nuevo"</h3>
+                <a href="https://anthoyeje.github.io/PanelPersonalizado-baile-aves-crdts-king-tony/" target="_blank" class="project-btn">Abrir</a>
+            </div>
+        </div>
+        <div class="project-card">
+            <img src="proy1/8.jpg" alt="Flores azules 30 de septiembre" class="card-image" onclick="showImageModal(this.src)">
+            <div class="card-body">
+                <h3 class="project-title">FLORES AZULES 30 DE SEPTIEMBRE</h3>
+                <a href="https://anthony-cup.github.io/floresazules-25-/" target="_blank" class="project-btn">Abrir</a>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-notice">Temporal</div>
+            <img src="proy1/7.jpg" alt="Apoya a Perú - Concurso de Comida" class="card-image" onclick="showImageModal(this.src)">
+            <div class="card-body">
+                <h3 class="project-title">APOYA A PERÚ - CONCURSO DE COMIDA</h3>
+                <a href="https://anthony-cup.github.io/bota7porperu-mundialdesayuno-yosoytonyhxp/" target="_blank" class="project-btn">🇵🇪 VOTAR</a>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-notice">¡Personaliza tu link!</div>
+            <img src="proy1/6.jpg" alt="Túnel de recuerdos" class="card-image" onclick="showImageModal(this.src)">
+            <div class="card-body">
+                <h3 class="project-title">TÚNEL DE RECUERDOS</h3>
+                <a href="https://tunel-de-recuerdos.web.app/" target="_blank" class="project-btn">Abrir</a>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-notice">¡Personaliza tu link!</div>
+            <img src="proy1/5.jpg" alt="Galaxia Personalizada" class="card-image" onclick="showImageModal(this.src)">
+            <div class="card-body">
+                <h3 class="project-title">GALAXIA PERSONALIZADA</h3>
+                <a href="https://anthony-cup.github.io/resubidoUniversoPersonalizado/" target="_blank" class="project-btn">Abrir</a>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-notice">¡Personaliza tu link!</div>
+            <img src="proy1/4.jpg" alt="Pistola de Corazones" class="card-image" onclick="showImageModal(this.src)">
+            <div class="card-body">
+                <h3 class="project-title">PISTOLA DE CORAZONES</h3>
+                <a href="https://compartir-ling.web.app" target="_blank" class="project-btn">Abrir</a>
+            </div>
+        </div>
+        <div class="project-card">
+            <img src="proy1/3.png" alt="Declaración especial" class="card-image" onclick="showImageModal(this.src)">
+            <div class="card-body">
+                <h3 class="project-title">DECLARACIÓN ESPECIAL</h3>
+                <a href="https://anthony-cup.github.io/declaracion-bonito-autor-tonyrealjs/" target="_blank" class="project-btn">Abrir</a>
+            </div>
+        </div>
+        <div class="project-card">
+            <img src="proy1/2.jpg" alt="Carta Sorpresa" class="card-image" onclick="showImageModal(this.src)">
+            <div class="card-body">
+                <h3 class="project-title">CARTA SORPRESA</h3>
+                <a href="https://anthony-cup.github.io/mi-web-anthony/" target="_blank" class="project-btn">Abrir</a>
+            </div>
+        </div>
+        <div class="project-card">
+            <img src="proy1/1.jpg" alt="Proyecto NANOTEC" class="card-image" onclick="showImageModal(this.src)">
+            <div class="card-body">
+                <h3 class="project-title">PROYECTO NANOTEC</h3>
+                <a href="https://anthony-cup.github.io/manotext-codgio-realjsweb_/" target="_blank" class="project-btn">Abrir</a>
+            </div>
+        </div>
     </div>
-    <div class="project-card">
-      <div class="project-notice">¡Personaliza tu link!</div>
-      <img src="proy1/9.jpg" alt="Baile de Conquista" class="card-image">
-      <div class="card-body">
-        <h3 class="project-title">BAILE DE CONQUISTA "Nuevo"</h3>
-        <a href="https://anthoyeje.github.io/PanelPersonalizado-baile-aves-crdts-king-tony/" target="_blank" class="project-btn">Abrir</a>
-      </div>
+    <div class="floating-popup" onclick="showWhatsAppModal()">
+        💬 Canal
     </div>
-    <div class="project-card">
-      <img src="proy1/8.jpg" alt="Flores azules 30 de septiembre" class="card-image">
-      <div class="card-body">
-        <h3 class="project-title">FLORES AZULES 30 DE SEPTIEMBRE</h3>
-        <a href="https://anthony-cup.github.io/floresazules-25-/" target="_blank" class="project-btn">Abrir</a>
-      </div>
+    <div class="donation-btn" onclick="showDonationModal()">
+        💝 Donar
     </div>
-    <div class="project-card">
-      <div class="project-notice">Temporal</div>
-      <img src="proy1/7.jpg" alt="Apoya a Perú - Concurso de Comida" class="card-image">
-      <div class="card-body">
-        <h3 class="project-title">APOYA A PERÚ - CONCURSO DE COMIDA</h3>
-        <a href="https://anthony-cup.github.io/bota7porperu-mundialdesayuno-yosoytonyhxp/" target="_blank" class="project-btn">🇵🇪 VOTAR</a>
-      </div>
+    <!-- Modal de Donación -->
+    <div class="overlay" id="donation-modal">
+        <div class="donation-modal">
+            <button class="close-x" onclick="hideDonationModal()">×</button>
+            <h2 style="color: #ffd700; margin-bottom: 10px;">💝 APOYA AL CREADOR</h2>
+            <p style="color: #cccccc;">Si te gustan mis proyectos, puedes apoyarme:</p>
+            <div class="payment-buttons">
+                <button class="payment-btn" onclick="showYape()">
+                    🇵🇪 YAPE (Perú)
+                </button>
+                <button class="payment-btn" onclick="openPayPal()">
+                    🌎 PAYPAL (Internacional)
+                </button>
+            </div>
+            <button class="modal-btn" onclick="hideDonationModal()" style="background: rgba(255,215,0,0.2); color: #ffd700; margin-top: 15px;">CONTINUAR</button>
+        </div>
     </div>
-    <div class="project-card">
-      <div class="project-notice">¡Personaliza tu link!</div>
-      <img src="proy1/6.jpg" alt="Túnel de recuerdos" class="card-image">
-      <div class="card-body">
-        <h3 class="project-title">TÚNEL DE RECUERDOS</h3>
-        <a href="https://tunel-de-recuerdos.web.app/" target="_blank" class="project-btn">Abrir</a>
-      </div>
+    <!-- Modal de Yape -->
+    <div class="overlay" id="yape-modal">
+        <div class="modal">
+            <button class="close-x" onclick="hideYapeModal()">×</button>
+            <h2>💰 DONACIÓN YAPE</h2>
+            <img src="yape.jpg" alt="QR Yape" style="width: 250px; height: auto; border-radius: 15px; margin: 20px 0;">
+            <p>Escanea el código QR con tu app Yape</p>
+            <button class="modal-btn" onclick="hideYapeModal()">CERRAR</button>
+        </div>
     </div>
-    <div class="project-card">
-      <div class="project-notice">¡Personaliza tu link!</div>
-      <img src="proy1/5.jpg" alt="Galaxia Personalizada" class="card-image">
-      <div class="card-body">
-        <h3 class="project-title">GALAXIA PERSONALIZADA</h3>
-        <a href="https://anthony-cup.github.io/resubidoUniversoPersonalizado/" target="_blank" class="project-btn">Abrir</a>
-      </div>
+    <!-- Modal de Navegador -->
+    <div class="overlay" id="browser-modal">
+        <div class="modal">
+            <button class="close-x" onclick="hideBrowserModal()">×</button>
+            <div class="modal-icon">
+                <i class="fas fa-globe" style="font-size: 3rem; color: #ff6b35;"></i>
+            </div>
+            <h2 style="color: #ff6b35;">🌐 RECOMENDACIÓN</h2>
+            <p>Para mejor experiencia, abre este link en <strong>Chrome</strong>, <strong>Firefox</strong> o <strong>Safari</strong></p>
+            <p style="font-size: 0.85rem; margin-top: 10px;">No uses el navegador de TikTok para evitar problemas</p>
+            <button class="modal-btn" onclick="hideBrowserModal()">ENTENDIDO</button>
+        </div>
     </div>
-    <div class="project-card">
-      <div class="project-notice">¡Personaliza tu link!</div>
-      <img src="proy1/4.jpg" alt="Pistola de Corazones" class="card-image">
-      <div class="card-body">
-        <h3 class="project-title">PISTOLA DE CORAZONES</h3>
-        <a href="https://compartir-ling.web.app" target="_blank" class="project-btn">Abrir</a>
-      </div>
+    <!-- Modal de WhatsApp -->
+    <div class="overlay" id="whatsapp-modal">
+        <div class="modal">
+            <button class="close-x" onclick="hideWhatsAppModal()">×</button>
+            <div class="modal-icon">
+                <i class="fab fa-whatsapp" style="font-size: 3rem; color: #25D366;"></i>
+            </div>
+            <h2 style="color: #25D366;">¡ÚNETE AL CANAL!</h2>
+            <p>Descubre proyectos únicos y conecta con otros desarrolladores 🔥</p>
+            <button class="modal-btn" onclick="openWhatsApp()">UNIRSE AHORA</button>
+            <button class="modal-btn" onclick="hideWhatsAppModal()" style="background: rgba(255,215,0,0.2); color: #ffd700;">DESPUÉS</button>
+        </div>
     </div>
-    <div class="project-card">
-      <img src="proy1/3.png" alt="Declaración especial" class="card-image">
-      <div class="card-body">
-        <h3 class="project-title">DECLARACIÓN ESPECIAL</h3>
-        <a href="https://anthony-cup.github.io/declaracion-bonito-autor-tonyrealjs/" target="_blank" class="project-btn">Abrir</a>
-      </div>
+    <!-- Nuevo Modal para Ingresar -->
+    <div class="overlay" id="ingresar-modal">
+        <div class="modal">
+            <h2 style="color: #ffd700;">✨ Bienvenido ✨</h2>
+            <p style="color: #cccccc; text-align: justify; line-height: 1.6; padding: 0 10px;">
+                👋 ¡Hola!
+                Bienvenido a la página.
+                🌟 Únete a nuestro canal de <b>WhatsApp</b> para no perderte nuevos proyectos, estrenos y actualizaciones.
+                💬 También podrás compartir tus ideas y estar en contacto con el creador.
+                ⚡ Este mensaje solo aparecerá una vez si eres nuevo.
+            </p>
+            <button class="modal-btn" onclick="ingresarBtnClick()">🚀 Ingresar</button>
+        </div>
     </div>
-    <div class="project-card">
-      <img src="proy1/2.jpg" alt="Carta Sorpresa" class="card-image">
-      <div class="card-body">
-        <h3 class="project-title">CARTA SORPRESA</h3>
-        <a href="https://anthony-cup.github.io/mi-web-anthony/" target="_blank" class="project-btn">Abrir</a>
-      </div>
+    <!-- Modal para Imagen Completa -->
+    <div class="overlay" id="image-modal">
+        <div class="modal" style="background: transparent; border: none; max-width: 90%;">
+            <button class="close-x" onclick="hideImageModal()">×</button>
+            <img id="full-image" src="" style="max-width: 100%; max-height: 80vh; border-radius: 10px;">
+        </div>
     </div>
-    <div class="project-card">
-      <img src="proy1/1.jpg" alt="Proyecto NANOTEC" class="card-image">
-      <div class="card-body">
-        <h3 class="project-title">PROYECTO NANOTEC</h3>
-        <a href="https://anthony-cup.github.io/manotext-codgio-realjsweb_/" target="_blank" class="project-btn">Abrir</a>
-      </div>
-    </div>
-    <div class="project-card">
-      <div class="project-notice">¡Nuevo Proyecto!</div>
-      <img src="proy1/11.jpg" alt="Nuevo Proyecto" class="card-image">
-      <div class="card-body">
-        <h3 class="project-title">NUEVO PROYECTO</h3>
-        <a href="https://example.com/nuevo-proyecto" target="_blank" class="project-btn">Abrir</a>
-      </div>
-    </div>
-  </div>
-  <div class="floating-popup" onclick="showWhatsAppModal()">
-    💬 Canal
-  </div>
-  <div class="donation-btn" onclick="showDonationModal()">
-    💝 Donar
-  </div>
-  <!-- Modal de Donación -->
-  <div class="overlay" id="donation-modal">
-    <div class="donation-modal">
-      <button class="close-x" onclick="hideDonationModal()">×</button>
-      <h2 style="color: #ffd700; margin-bottom: 10px;">💝 APOYA AL CREADOR</h2>
-      <p style="color: #cccccc;">Si te gustan mis proyectos, puedes apoyarme:</p>
-      <div class="payment-buttons">
-        <button class="payment-btn" onclick="showYape()">
-          🇵🇪 YAPE (Perú)
-        </button>
-        <button class="payment-btn" onclick="openPayPal()">
-          🌎 PAYPAL (Internacional)
-        </button>
-      </div>
-      <button class="modal-btn" onclick="hideDonationModal()" style="background: rgba(255,215,0,0.2); color: #ffd700; margin-top: 15px;">CONTINUAR</button>
-    </div>
-  </div>
-  <!-- Modal de Yape -->
-  <div class="overlay" id="yape-modal">
-    <div class="modal">
-      <button class="close-x" onclick="hideYapeModal()">×</button>
-      <h2>💰 DONACIÓN YAPE</h2>
-      <img src="yape.jpg" alt="QR Yape" style="width: 250px; height: auto; border-radius: 15px; margin: 20px 0;">
-      <p>Escanea el código QR con tu app Yape</p>
-      <button class="modal-btn" onclick="hideYapeModal()">CERRAR</button>
-    </div>
-  </div>
-  <!-- Modal de Navegador -->
-  <div class="overlay" id="browser-modal">
-    <div class="modal">
-      <button class="close-x" onclick="hideBrowserModal()">×</button>
-      <div class="modal-icon">
-        <i class="fas fa-globe" style="font-size: 3rem; color: #ff6b35;"></i>
-      </div>
-      <h2 style="color: #ff6b35;">🌐 RECOMENDACIÓN</h2>
-      <p>Para mejor experiencia, abre este link en <strong>Chrome</strong>, <strong>Firefox</strong> o <strong>Safari</strong></p>
-      <p style="font-size: 0.85rem; margin-top: 10px;">No uses el navegador de TikTok para evitar problemas</p>
-      <button class="modal-btn" onclick="hideBrowserModal()">ENTENDIDO</button>
-    </div>
-  </div>
-  <!-- Modal de WhatsApp -->
-  <div class="overlay" id="whatsapp-modal">
-    <div class="modal">
-      <button class="close-x" onclick="hideWhatsAppModal()">×</button>
-      <div class="modal-icon">
-        <i class="fab fa-whatsapp" style="font-size: 3rem; color: #25D366;"></i>
-      </div>
-      <h2 style="color: #25D366;">¡ÚNETE AL CANAL!</h2>
-      <p>Descubre proyectos únicos y conecta con otros desarrolladores 🔥</p>
-      <button class="modal-btn" onclick="openWhatsApp()">UNIRSE AHORA</button>
-      <button class="modal-btn" onclick="hideWhatsAppModal()" style="background: rgba(255,215,0,0.2); color: #ffd700;">DESPUÉS</button>
-    </div>
-  </div>
-  <!-- Nuevo Modal para Ingresar -->
-  <div class="overlay" id="ingresar-modal">
-  <div class="modal">
-    <h2 style="color: #ffd700;">✨ Bienvenido ✨</h2>
-    <p style="color: #cccccc; text-align: justify; line-height: 1.6; padding: 0 10px;">
-      👋 ¡Hola!  
-      &nbsp;&nbsp;&nbsp;Bienvenido a la página.  
-      🌟 Únete a nuestro canal de <b>WhatsApp</b> para no perderte nuevos proyectos, estrenos y actualizaciones.  
-      💬 También podrás compartir tus ideas y estar en contacto con el creador.  
-      ⚡ Este mensaje solo aparecerá una vez si eres nuevo.
-    </p>
-
-    <button class="modal-btn" onclick="ingresarBtnClick()">🚀 Ingresar</button>
-  </div>
-</div>
-
-  </div>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-    import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCS1fl0K2dDAfA6VS5O945Z35nhTyoSNYA",
-      authDomain: "perfil-tiktok-nuevos.firebaseapp.com",
-      databaseURL: "https://perfil-tiktok-nuevos-default-rtdb.firebaseio.com",
-      projectId: "perfil-tiktok-nuevos",
-      storageBucket: "perfil-tiktok-nuevos.firebasestorage.app",
-      messagingSenderId: "169664779049",
-      appId: "1:169664779049:web:5973fba974e08429361d38",
-      measurementId: "G-96HHYP579Y"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // Función para leer cookies del navegador (busca por nombre exacto)
-    function readCookie(name){ const parts = document.cookie.split(';').map(s=>s.trim()); for(const p of parts){ if(p.startsWith(name+'=')) return p.split('=')[1]; } return null; }
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+        import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyCS1fl0K2dDAfA6VS5O945Z35nhTyoSNYA",
+            authDomain: "perfil-tiktok-nuevos.firebaseapp.com",
+            databaseURL: "https://perfil-tiktok-nuevos-default-rtdb.firebaseio.com",
+            projectId: "perfil-tiktok-nuevos",
+            storageBucket: "perfil-tiktok-nuevos.firebasestorage.app",
+            messagingSenderId: "169664779049",
+            appId: "1:169664779049:web:5973fba974e08429361d38",
+            measurementId: "G-96HHYP579Y"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        // Función para leer cookies del navegador (busca por nombre exacto)
+        function readCookie(name){ const parts = document.cookie.split(';').map(s=>s.trim()); for(const p of parts){ if(p.startsWith(name+'=')) return p.split('=')[1]; } return null; }
     
-    // Función para setear cookies con expiración y flags para cross-site (SameSite=None;Secure para GitHub Pages HTTPS)
-    function setCookie(name,value,expiresMs){ const d = new Date(Date.now()+expiresMs); document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/;SameSite=None;Secure`; }
+        // Función para setear cookies con expiración y flags para cross-site (SameSite=None;Secure para GitHub Pages HTTPS)
+        function setCookie(name,value,expiresMs){ const d = new Date(Date.now()+expiresMs); document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/;SameSite=None;Secure`; }
     
-    // Función para generar secreto aleatorio para cookie (32 chars hex)
-    function makeCookieSecret(){ const arr = new Uint8Array(16); crypto.getRandomValues(arr); return Array.from(arr).map(b=>b.toString(16).padStart(2,'0')).join(''); }
-
-    // Función para obtener fingerprint del dispositivo (sin IP para evitar fallos en fetch)
-    function getDeviceFingerprint() {
-      return {
-        userAgent: navigator.userAgent || 'unknown',
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown',
-        language: navigator.language || 'unknown',
-        screenRes: `${screen.width}x${screen.height}` || 'unknown',
-        platform: navigator.platform || 'unknown'
-      };
-    }
-
-    // Función para calcular score de validación (sin IP, 5 factores, threshold 60% para más leniencia cross-site)
-    function calculateValidationScore(data, currentFingerprint) {
-      const cookie = readCookie('ingresar_secret');
-      let score = 0;
-      let reasons = [];
-      let matchedFactors = 0;
-
-      // Chequeo cookie (20 puntos) - Opcional cross-site
-      if (cookie && cookie === data.cookieSecret) {
-        score += 20;
-        matchedFactors++;
-        reasons.push('Cookie match');
-      } else {
-        reasons.push('Cookie no match');
-      }
-
-      // Chequeo userAgent (20 puntos)
-      if (data.activatorMeta && data.activatorMeta.userAgent === currentFingerprint.userAgent) {
-        score += 20;
-        matchedFactors++;
-        reasons.push('UserAgent match');
-      } else {
-        reasons.push('UserAgent no match');
-      }
-
-      // Chequeo timezone (20 puntos)
-      if (data.activatorMeta && data.activatorMeta.timezone === currentFingerprint.timezone) {
-        score += 20;
-        matchedFactors++;
-        reasons.push('Timezone match');
-      } else {
-        reasons.push('Timezone no match');
-      }
-
-      // Chequeo language (20 puntos)
-      if (data.activatorMeta && data.activatorMeta.language === currentFingerprint.language) {
-        score += 20;
-        matchedFactors++;
-        reasons.push('Language match');
-      } else {
-        reasons.push('Language no match');
-      }
-
-      // Chequeo screenRes/platform (20 puntos - combinado para simplicidad)
-      const savedRes = data.activatorMeta?.screenRes;
-      const savedPlat = data.activatorMeta?.platform;
-      const currentRes = currentFingerprint.screenRes;
-      const currentPlat = currentFingerprint.platform;
-      if ((savedRes === currentRes || savedPlat === currentPlat) && data.activatorMeta) { // Tolerancia: match en res O platform
-        score += 20;
-        matchedFactors++;
-        reasons.push('Screen/platform match');
-      } else {
-        reasons.push('Screen/platform no match');
-      }
-
-      const percentage = Math.round(score);
-      return { score, percentage, isValid: percentage >= 60, reasons, matchedFactors };
-    }
-
-    // Función para mostrar el modal de ingresar
-    function showIngresarModal() {
-      const modal = document.getElementById('ingresar-modal');
-      modal.style.display = 'flex';
-      setTimeout(() => modal.classList.add('show'), 10);
-    }
-
-    // Función para ocultar el modal de ingresar
-    function hideIngresarModal() {
-      const modal = document.getElementById('ingresar-modal');
-      modal.classList.remove('show');
-      setTimeout(() => modal.style.display = 'none', 500);
-    }
-
-    // Lógica principal al cargar la página
-    async function checkUserRegistration() {
-      const loadingOverlay = document.getElementById('loading-overlay');
-      loadingOverlay.classList.remove('hidden'); // Mostrar loading
-
-      const userID = readCookie('ingresar_userid');
-      const currentFingerprint = getDeviceFingerprint();
-
-      let isRegistered = false;
-
-      if (userID) {
-        try {
-          const snap = await get(ref(db, 'users/' + userID));
-          if (snap.exists()) {
-            const data = snap.val();
-            const { isValid } = calculateValidationScore(data, currentFingerprint);
-            if (isValid) {
-              isRegistered = true;
-            }
-          }
-        } catch (e) {
-          console.error('Error al verificar usuario:', e);
+        // Función para generar secreto aleatorio para cookie (32 chars hex)
+        function makeCookieSecret(){ const arr = new Uint8Array(16); crypto.getRandomValues(arr); return Array.from(arr).map(b=>b.toString(16).padStart(2,'0')).join(''); }
+        // Función para obtener fingerprint del dispositivo (sin IP para evitar fallos en fetch)
+        function getDeviceFingerprint() {
+            return {
+                userAgent: navigator.userAgent || 'unknown',
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown',
+                language: navigator.language || 'unknown',
+                screenRes: `${screen.width}x${screen.height}` || 'unknown',
+                platform: navigator.platform || 'unknown'
+            };
         }
-      }
-
-      // Ocultar loading después de la verificación
-      setTimeout(() => {
-        loadingOverlay.classList.add('hidden');
-      }, 1000); // Pequeño delay para que se vea el loader
-
-      if (!isRegistered) {
-        showIngresarModal();
-      } else {
-        // Solo mostrar los anuncios si está registrado
-        setTimeout(showDonationModal, 3000);
-      }
-    }
-
-    // Función para el clic en ingresar
-    async function ingresarBtnClick() {
-      try {
-        const userID = makeCookieSecret(); // Generar ID único
-        const cookieSecret = makeCookieSecret();
-        const currentFingerprint = getDeviceFingerprint();
-        const now = Date.now();
-
-        await update(ref(db, 'users/' + userID), { 
-          cookieSecret, 
-          createdAt: now, 
-          activatorMeta: { 
-            userAgent: currentFingerprint.userAgent,
-            timezone: currentFingerprint.timezone,
-            language: currentFingerprint.language,
-            screenRes: currentFingerprint.screenRes,
-            platform: currentFingerprint.platform
-          }
+        // Función para calcular score de validación (sin IP, 5 factores, threshold 60% para más leniencia cross-site)
+        function calculateValidationScore(data, currentFingerprint) {
+            const cookie = readCookie('ingresar_secret');
+            let score = 0;
+            let reasons = [];
+            let matchedFactors = 0;
+            // Chequeo cookie (20 puntos) - Opcional cross-site
+            if (cookie && cookie === data.cookieSecret) {
+                score += 20;
+                matchedFactors++;
+                reasons.push('Cookie match');
+            } else {
+                reasons.push('Cookie no match');
+            }
+            // Chequeo userAgent (20 puntos)
+            if (data.activatorMeta && data.activatorMeta.userAgent === currentFingerprint.userAgent) {
+                score += 20;
+                matchedFactors++;
+                reasons.push('UserAgent match');
+            } else {
+                reasons.push('UserAgent no match');
+            }
+            // Chequeo timezone (20 puntos)
+            if (data.activatorMeta && data.activatorMeta.timezone === currentFingerprint.timezone) {
+                score += 20;
+                matchedFactors++;
+                reasons.push('Timezone match');
+            } else {
+                reasons.push('Timezone no match');
+            }
+            // Chequeo language (20 puntos)
+            if (data.activatorMeta && data.activatorMeta.language === currentFingerprint.language) {
+                score += 20;
+                matchedFactors++;
+                reasons.push('Language match');
+            } else {
+                reasons.push('Language no match');
+            }
+            // Chequeo screenRes/platform (20 puntos - combinado para simplicidad)
+            const savedRes = data.activatorMeta?.screenRes;
+            const savedPlat = data.activatorMeta?.platform;
+            const currentRes = currentFingerprint.screenRes;
+            const currentPlat = currentFingerprint.platform;
+            if ((savedRes === currentRes || savedPlat === currentPlat) && data.activatorMeta) { // Tolerancia: match en res O platform
+                score += 20;
+                matchedFactors++;
+                reasons.push('Screen/platform match');
+            } else {
+                reasons.push('Screen/platform no match');
+            }
+            const percentage = Math.round(score);
+            return { score, percentage, isValid: percentage >= 60, reasons, matchedFactors };
+        }
+        // Función para mostrar el modal de ingresar
+        function showIngresarModal() {
+            const modal = document.getElementById('ingresar-modal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+        // Función para ocultar el modal de ingresar
+        function hideIngresarModal() {
+            const modal = document.getElementById('ingresar-modal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 500);
+        }
+        // Lógica principal al cargar la página
+        async function checkUserRegistration() {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            loadingOverlay.classList.remove('hidden'); // Mostrar loading
+            const userID = readCookie('ingresar_userid');
+            const currentFingerprint = getDeviceFingerprint();
+            let isRegistered = false;
+            if (userID) {
+                try {
+                    const snap = await get(ref(db, 'users/' + userID));
+                    if (snap.exists()) {
+                        const data = snap.val();
+                        const { isValid } = calculateValidationScore(data, currentFingerprint);
+                        if (isValid) {
+                            isRegistered = true;
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error al verificar usuario:', e);
+                }
+            }
+            // Ocultar loading después de la verificación
+            setTimeout(() => {
+                loadingOverlay.classList.add('hidden');
+            }, 1000); // Pequeño delay para que se vea el loader
+            if (!isRegistered) {
+                showIngresarModal();
+            } else {
+                // Solo mostrar los anuncios si está registrado
+                setTimeout(showDonationModal, 3000);
+            }
+        }
+        // Función para el clic en ingresar
+        async function ingresarBtnClick() {
+            try {
+                const userID = makeCookieSecret(); // Generar ID único
+                const cookieSecret = makeCookieSecret();
+                const currentFingerprint = getDeviceFingerprint();
+                const now = Date.now();
+                await update(ref(db, 'users/' + userID), {
+                    cookieSecret,
+                    createdAt: now,
+                    activatorMeta: {
+                        userAgent: currentFingerprint.userAgent,
+                        timezone: currentFingerprint.timezone,
+                        language: currentFingerprint.language,
+                        screenRes: currentFingerprint.screenRes,
+                        platform: currentFingerprint.platform
+                    }
+                });
+                // Establecer cookies (1 año)
+                setCookie('ingresar_userid', userID, 365 * 24 * 60 * 60 * 1000);
+                setCookie('ingresar_secret', cookieSecret, 365 * 24 * 60 * 60 * 1000);
+                // Redirigir a WhatsApp
+                window.open('https://whatsapp.com/channel/0029VbB5RALId7nHMW3BYj0c', '_blank');
+            } catch (e) {
+                console.error('Error al registrar usuario:', e);
+            } finally {
+                hideIngresarModal();
+                // Después de registrar, mostrar los anuncios
+                setTimeout(showDonationModal, 3000);
+            }
+        }
+        // Resto de funciones de modales
+        function showDonationModal() {
+            const modal = document.getElementById('donation-modal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+        function hideDonationModal() {
+            const modal = document.getElementById('donation-modal');
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                showWhatsAppModal();
+            }, 500);
+        }
+        function showYape() {
+            const modal = document.getElementById('yape-modal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+        function hideYapeModal() {
+            const modal = document.getElementById('yape-modal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 500);
+        }
+        function openPayPal() {
+            window.open('https://paypal.me/tonyhxp', '_blank');
+            hideDonationModal();
+        }
+        function showBrowserWarning() {
+            const modal = document.getElementById('browser-modal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+        function hideBrowserModal() {
+            const modal = document.getElementById('browser-modal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 500);
+        }
+        function showWhatsAppModal() {
+            const modal = document.getElementById('whatsapp-modal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+        function hideWhatsAppModal() {
+            const modal = document.getElementById('whatsapp-modal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 500);
+        }
+        function openWhatsApp() {
+            window.open('https://whatsapp.com/channel/0029VbB5RALId7nHMW3BYj0c', '_blank');
+            hideWhatsAppModal();
+        }
+        // Funciones para modal de imagen
+        function showImageModal(src) {
+            document.getElementById('full-image').src = src;
+            const modal = document.getElementById('image-modal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+        function hideImageModal() {
+            const modal = document.getElementById('image-modal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 500);
+        }
+        // Exponer funciones al scope global (window) para que funcionen con onclick
+        window.showDonationModal = showDonationModal;
+        window.hideDonationModal = hideDonationModal;
+        window.showYape = showYape;
+        window.hideYapeModal = hideYapeModal;
+        window.openPayPal = openPayPal;
+        window.showBrowserWarning = showBrowserWarning;
+        window.hideBrowserModal = hideBrowserModal;
+        window.showWhatsAppModal = showWhatsAppModal;
+        window.hideWhatsAppModal = hideWhatsAppModal;
+        window.openWhatsApp = openWhatsApp;
+        window.ingresarBtnClick = ingresarBtnClick;
+        window.showImageModal = showImageModal;
+        window.hideImageModal = hideImageModal;
+        // Llamar a la verificación al cargar
+        checkUserRegistration();
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.95)';
+                    this.style.filter = 'brightness(1.2)';
+                });
+                card.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.filter = 'brightness(1)';
+                });
+            });
         });
-
-        // Establecer cookies (1 año)
-        setCookie('ingresar_userid', userID, 365 * 24 * 60 * 60 * 1000);
-        setCookie('ingresar_secret', cookieSecret, 365 * 24 * 60 * 60 * 1000);
-
-        // Redirigir a WhatsApp
-        window.open('https://whatsapp.com/channel/0029VbB5RALId7nHMW3BYj0c', '_blank');
-      } catch (e) {
-        console.error('Error al registrar usuario:', e);
-      } finally {
-        hideIngresarModal();
-        // Después de registrar, mostrar los anuncios
-        setTimeout(showDonationModal, 3000);
-      }
-    }
-
-    // Resto de funciones de modales
-    function showDonationModal() {
-      const modal = document.getElementById('donation-modal');
-      modal.style.display = 'flex';
-      setTimeout(() => modal.classList.add('show'), 10);
-    }
-    function hideDonationModal() {
-      const modal = document.getElementById('donation-modal');
-      modal.classList.remove('show');
-      setTimeout(() => {
-        modal.style.display = 'none';
-        showWhatsAppModal();
-      }, 500);
-    }
-    function showYape() {
-      const modal = document.getElementById('yape-modal');
-      modal.style.display = 'flex';
-      setTimeout(() => modal.classList.add('show'), 10);
-    }
-    function hideYapeModal() {
-      const modal = document.getElementById('yape-modal');
-      modal.classList.remove('show');
-      setTimeout(() => modal.style.display = 'none', 500);
-    }
-    function openPayPal() {
-      window.open('https://paypal.me/tonyhxp', '_blank');
-      hideDonationModal();
-    }
-    function showBrowserWarning() {
-      const modal = document.getElementById('browser-modal');
-      modal.style.display = 'flex';
-      setTimeout(() => modal.classList.add('show'), 10);
-    }
-    function hideBrowserModal() {
-      const modal = document.getElementById('browser-modal');
-      modal.classList.remove('show');
-      setTimeout(() => modal.style.display = 'none', 500);
-    }
-    function showWhatsAppModal() {
-      const modal = document.getElementById('whatsapp-modal');
-      modal.style.display = 'flex';
-      setTimeout(() => modal.classList.add('show'), 10);
-    }
-    function hideWhatsAppModal() {
-      const modal = document.getElementById('whatsapp-modal');
-      modal.classList.remove('show');
-      setTimeout(() => modal.style.display = 'none', 500);
-    }
-    function openWhatsApp() {
-      window.open('https://whatsapp.com/channel/0029VbB5RALId7nHMW3BYj0c', '_blank');
-      hideWhatsAppModal();
-    }
-
-    // Exponer funciones al scope global (window) para que funcionen con onclick
-    window.showDonationModal = showDonationModal;
-    window.hideDonationModal = hideDonationModal;
-    window.showYape = showYape;
-    window.hideYapeModal = hideYapeModal;
-    window.openPayPal = openPayPal;
-    window.showBrowserWarning = showBrowserWarning;
-    window.hideBrowserModal = hideBrowserModal;
-    window.showWhatsAppModal = showWhatsAppModal;
-    window.hideWhatsAppModal = hideWhatsAppModal;
-    window.openWhatsApp = openWhatsApp;
-    window.ingresarBtnClick = ingresarBtnClick;
-
-    // Llamar a la verificación al cargar
-    checkUserRegistration();
-
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.project-card').forEach(card => {
-        card.addEventListener('touchstart', function() {
-          this.style.transform = 'scale(0.95)';
-          this.style.filter = 'brightness(1.2)';
-        });
-        card.addEventListener('touchend', function() {
-          this.style.transform = 'scale(1)';
-          this.style.filter = 'brightness(1)';
-        });
-      });
-    });
-  </script>
+    </script>
 </body>
 </html>
