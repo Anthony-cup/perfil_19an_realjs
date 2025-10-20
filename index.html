@@ -924,6 +924,14 @@
             const percentage = Math.round(score);
             return { score, percentage, isValid: percentage >= 60, reasons, matchedFactors };
         }
+        // Función para verificar si se deben mostrar los anuncios (cada 2 horas)
+        function shouldShowAds() {
+            const lastTime = readCookie('lastAdsTime');
+            if (!lastTime) return true;
+            const now = Date.now();
+            const twoHoursMs = 2 * 60 * 60 * 1000;
+            return (now - parseInt(lastTime)) >= twoHoursMs;
+        }
         // Función para mostrar el modal de ingresar
         function showIngresarModal() {
             const modal = document.getElementById('ingresar-modal');
@@ -964,9 +972,9 @@
             }, 1000); // Pequeño delay para que se vea el loader
             if (!isRegistered) {
                 showIngresarModal();
-            } else {
-                // Solo mostrar los anuncios si está registrado
-                setTimeout(showDonationModal, 3000);
+            } else if (shouldShowAds()) {
+                // Solo mostrar los anuncios si está registrado y han pasado 2 horas
+                setTimeout(() => showDonationModal(), 3000);
             }
         }
         // Función para el clic en ingresar
@@ -996,8 +1004,8 @@
                 console.error('Error al registrar usuario:', e);
             } finally {
                 hideIngresarModal();
-                // Después de registrar, mostrar los anuncios
-                setTimeout(showDonationModal, 3000);
+                // Después de registrar, mostrar los anuncios inmediatamente
+                showDonationModal();
             }
         }
         // Resto de funciones de modales
@@ -1046,7 +1054,11 @@
         function hideWhatsAppModal() {
             const modal = document.getElementById('whatsapp-modal');
             modal.classList.remove('show');
-            setTimeout(() => modal.style.display = 'none', 500);
+            setTimeout(() => {
+                modal.style.display = 'none';
+                // Establecer cookie después de cerrar el modal de WhatsApp (fin de la secuencia de anuncios)
+                setCookie('lastAdsTime', Date.now().toString(), 365 * 24 * 60 * 60 * 1000);
+            }, 500);
         }
         function openWhatsApp() {
             window.open('https://whatsapp.com/channel/0029VbB5RALId7nHMW3BYj0c', '_blank');
@@ -1101,8 +1113,9 @@
             cards.forEach(card => {
                 const category = card.dataset.category;
                 const title = card.querySelector('.project-title').textContent.toLowerCase();
-                if ((category === currentFilter || currentFilter === 'all') && 
-                    (searchTerm === '' || title.includes(searchTerm.toLowerCase()))) {
+                const matchesSearch = searchTerm === '' || title.includes(searchTerm.toLowerCase());
+                const matchesCategory = (searchTerm !== '') ? true : (category === currentFilter);
+                if (matchesSearch && matchesCategory) {
                     card.classList.add('show');
                     visibleCount++;
                 } else {
