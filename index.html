@@ -123,8 +123,95 @@
             transform: scale(0.9);
             box-shadow: 0 0 25px rgba(255,215,0,0.8);
         }
+        .projects-controls {
+            padding: 0 15px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        .info-notice {
+            background: linear-gradient(135deg, rgba(0,8,20,0.8), rgba(0,17,34,0.6));
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #cccccc;
+            line-height: 1.4;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .info-notice i {
+            color: #ffd700;
+            margin-right: 5px;
+        }
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: linear-gradient(45deg, rgba(255,215,0,0.2), rgba(255,215,0,0.1));
+            color: #ffd700;
+            border: 2px solid #ffd700;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        .filter-btn.active {
+            background: linear-gradient(45deg, #ffd700, #b8860b);
+            color: #000814;
+            box-shadow: 0 5px 15px rgba(255,215,0,0.4);
+        }
+        .filter-btn:active {
+            transform: scale(0.95);
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(0,8,20,0.8), rgba(0,17,34,0.6));
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 25px;
+            padding: 5px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .search-input {
+            background: none;
+            border: none;
+            color: #ffd700;
+            font-size: 1rem;
+            padding: 10px 15px;
+            flex: 1;
+            outline: none;
+        }
+        .search-icon {
+            color: #ffd700;
+            font-size: 1.2rem;
+            padding: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .search-icon:hover {
+            color: #ffed4e;
+        }
+        .project-count {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #cccccc;
+            font-weight: 700;
+        }
         .projects-grid {
-            padding: 20px 15px;
+            padding: 0 15px 20px;
             max-width: 500px;
             margin: 0 auto;
             position: relative;
@@ -139,6 +226,10 @@
             overflow: hidden;
             position: relative;
             transition: all 0.4s ease;
+            display: none; /* Hidden by default, shown via JS */
+        }
+        .project-card.show {
+            display: block;
         }
         .project-card::before {
             content: '';
@@ -183,21 +274,31 @@
             0%, 100% { opacity: 0.9; }
             50% { opacity: 1; }
         }
-        .project-btn {
+        .project-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .project-btn, .project-video-btn {
             background: linear-gradient(45deg, #ffd700, #b8860b);
             color: #000814;
-            padding: 12px 30px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 25px;
+            border-radius: 20px;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
         }
-        .project-btn::after {
+        .project-video-btn {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+        }
+        .project-btn::after, .project-video-btn::after {
             content: '';
             position: absolute;
             top: 50%;
@@ -209,11 +310,11 @@
             transition: all 0.5s ease;
             transform: translate(-50%, -50%);
         }
-        .project-btn:active::after {
+        .project-btn:active::after, .project-video-btn:active::after {
             width: 300px;
             height: 300px;
         }
-        .project-btn:active {
+        .project-btn:active, .project-video-btn:active {
             transform: scale(0.95);
             box-shadow: 0 5px 20px rgba(255,215,0,0.6);
         }
@@ -448,6 +549,10 @@
             .floating-popup, .donation-btn { font-size: 0.7rem; padding: 10px 15px; }
             .project-notice { font-size: 0.7rem; padding: 4px 12px; }
             .description { font-size: 0.9rem; }
+            .filter-btn { padding: 8px 15px; font-size: 0.8rem; }
+            .project-buttons { flex-direction: column; width: 100%; }
+            .project-btn, .project-video-btn { width: 100%; }
+            .info-notice { font-size: 0.8rem; padding: 12px; }
         }
         /* Loading styles */
         #loading-overlay {
@@ -503,89 +608,153 @@
             </div>
         </div>
     </header>
+    <div class="projects-controls">
+        <div class="info-notice">
+            <i class="fas fa-info-circle"></i>
+          <strong>Aviso:</strong> Los proyectos <strong>con panel</strong> se pueden editar el contenido del ling. Los <strong>sin panel</strong> solo esta el enlace para compartir y no permiten edición.
+
+        </div>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-category="con-panel">Con Panel</button>
+            <button class="filter-btn" data-category="sin-panel">Sin Panel</button>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-input" id="search-input" placeholder="Buscar proyecto...">
+            <i class="fas fa-search search-icon" onclick="performSearch()"></i>
+        </div>
+        <div class="project-count" id="project-count">Total: 12 proyectos</div>
+    </div>
     <div class="projects-grid">
-        <div class="project-card">
-            <div class="project-notice">¡Nuevo Proyecto!</div>
+        <div class="project-card" data-category="con-panel">
+            <div class="project-notice">¡ Incluye panel para Personalizarlo  !</div>
+            <img src="proy1/12.jpg" alt="Frecuencia de amor" class="card-image" onclick="showImageModal(this.src)">
+            <div class="card-body">
+                <h3 class="project-title">FRECUENCIA DE AMOR</h3>
+                <div class="project-buttons">
+                    <a href="https://anthoyeje.github.io/Panel-frecuencia-amor-kingTony/" target="_blank" class="project-btn">Abrir</a>
+                    <a href="#" target="_blank" class="project-video-btn" onclick="openVideo('https://www.tiktok.com/@king_tony_hxp/video/7563205158470012168?is_from_webapp=1&sender_device=pc&web_id=7498213128183662086')">Ver Video</a>
+                </div>
+            </div>
+        </div>
+        <div class="project-card" data-category="sin-panel">
+            <div class="project-notice">¡No Incluye panel - solo ling!</div>
             <img src="proy1/11.jpg" alt="Amor en el vacío" class="card-image" onclick="showImageModal(this.src)">
             <div class="card-body">
                 <h3 class="project-title">AMOR EN EL VACÍO</h3>
-                <a href="https://anthoyeje.github.io/panel-galax-de-amor-/" target="_blank" class="project-btn">Abrir</a>
+                <div class="project-buttons">
+                    <a href="https://anthoyeje.github.io/panel-galax-de-amor-/" target="_blank" class="project-btn">Abrir</a>
+                    <a href="#" target="_blank" class="project-video-btn" onclick="openVideo('https://www.tiktok.com/@king_tony_hxp/video/7562116123186007304?is_from_webapp=1&sender_device=pc&web_id=7498213128183662086')">Ver Video</a>
+                </div>
             </div>
         </div>
-        <div class="project-card">
-            <div class="project-notice">¡Personaliza tu link!</div>
+        <div class="project-card" data-category="con-panel">
+            <div class="project-notice">¡  Incluye panel para Personalizarlo !</div>
             <img src="proy1/10.jpg" alt="6 cartas de perdon" class="card-image" onclick="showImageModal(this.src)">
             <div class="card-body">
                 <h3 class="project-title">6 CARTAS DE PERDON "Nuevo"</h3>
-                <a href="https://anthoyeje.github.io/panel-6cartas-de-perdon/" target="_blank" class="project-btn">Abrir</a>
+                <div class="project-buttons">
+                    <a href="https://anthoyeje.github.io/panel-6cartas-de-perdon/" target="_blank" class="project-btn">Abrir</a>
+                    <a href="#" target="_blank" class="project-video-btn" onclick="openVideo('https://www.tiktok.com/@king_tony_hxp/video/7560754188192320776?is_from_webapp=1&sender_device=pc&web_id=7498213128183662086')">Ver Video</a>
+                </div>
             </div>
         </div>
-        <div class="project-card">
-            <div class="project-notice">¡Personaliza tu link!</div>
+        <div class="project-card" data-category="con-panel">
+            <div class="project-notice">¡ Incluye panel para Personalizarlo !</div>
             <img src="proy1/9.jpg" alt="Baile de Conquista" class="card-image" onclick="showImageModal(this.src)">
             <div class="card-body">
                 <h3 class="project-title">BAILE DE CONQUISTA "Nuevo"</h3>
-                <a href="https://anthoyeje.github.io/PanelPersonalizado-baile-aves-crdts-king-tony/" target="_blank" class="project-btn">Abrir</a>
+                <div class="project-buttons">
+                    <a href="https://anthoyeje.github.io/PanelPersonalizado-baile-aves-crdts-king-tony/" target="_blank" class="project-btn">Abrir</a>
+                    <a href="#" target="_blank" class="project-video-btn" onclick="openVideo('https://www.tiktok.com/@king_tony_hxp/video/7559442433331727634?is_from_webapp=1&sender_device=pc&web_id=7498213128183662086')">Ver Video</a>
+                </div>
             </div>
         </div>
-        <div class="project-card">
+        <div class="project-card" data-category="sin-panel">
+          <div class="project-notice">¡ No Incluye panel - solo ling !</div>
             <img src="proy1/8.jpg" alt="Flores azules 30 de septiembre" class="card-image" onclick="showImageModal(this.src)">
             <div class="card-body">
                 <h3 class="project-title">FLORES AZULES 30 DE SEPTIEMBRE</h3>
-                <a href="https://anthony-cup.github.io/floresazules-25-/" target="_blank" class="project-btn">Abrir</a>
+                <div class="project-buttons">
+                    <a href="https://anthony-cup.github.io/floresazules-25-/" target="_blank" class="project-btn">Abrir</a>
+                    <a href="#" target="_blank" class="project-video-btn" onclick="openVideo('https://www.tiktok.com/@king_tony_hxp/video/7555761850936216840?is_from_webapp=1&sender_device=pc&web_id=7498213128183662086')">Ver Video</a>
+                </div>
             </div>
         </div>
-        <div class="project-card">
+        <div class="project-card" data-category="sin-panel">
             <div class="project-notice">Temporal</div>
             <img src="proy1/7.jpg" alt="Apoya a Perú - Concurso de Comida" class="card-image" onclick="showImageModal(this.src)">
             <div class="card-body">
                 <h3 class="project-title">APOYA A PERÚ - CONCURSO DE COMIDA</h3>
-                <a href="https://anthony-cup.github.io/bota7porperu-mundialdesayuno-yosoytonyhxp/" target="_blank" class="project-btn">🇵🇪 VOTAR</a>
+                <div class="project-buttons">
+                    <a href="https://anthony-cup.github.io/bota7porperu-mundialdesayuno-yosoytonyhxp/" target="_blank" class="project-btn">🇵🇪 VOTAR</a>
+                    
+                </div>
             </div>
         </div>
-        <div class="project-card">
-            <div class="project-notice">¡Personaliza tu link!</div>
+        <div class="project-card" data-category="con-panel">
+            <div class="project-notice">¡  Incluye panel para Personalizarlo !</div>
             <img src="proy1/6.jpg" alt="Túnel de recuerdos" class="card-image" onclick="showImageModal(this.src)">
             <div class="card-body">
                 <h3 class="project-title">TÚNEL DE RECUERDOS</h3>
-                <a href="https://tunel-de-recuerdos.web.app/" target="_blank" class="project-btn">Abrir</a>
+                <div class="project-buttons">
+                    <a href="https://tunel-de-recuerdos.web.app/" target="_blank" class="project-btn">Abrir</a>
+                    <a href="#" target="_blank" class="project-video-btn" onclick="openVideo('https://www.tiktok.com/@king_tony_hxp/video/7543845333986594056?is_from_webapp=1&sender_device=pc&web_id=7498213128183662086')">Ver Video</a>
+                </div>
             </div>
         </div>
-        <div class="project-card">
-            <div class="project-notice">¡Personaliza tu link!</div>
+        <div class="project-card" data-category="con-panel">
+            <div class="project-notice">¡  Incluye panel para Personalizarlo !</div>
             <img src="proy1/5.jpg" alt="Galaxia Personalizada" class="card-image" onclick="showImageModal(this.src)">
             <div class="card-body">
                 <h3 class="project-title">GALAXIA PERSONALIZADA</h3>
-                <a href="https://anthony-cup.github.io/resubidoUniversoPersonalizado/" target="_blank" class="project-btn">Abrir</a>
+                <div class="project-buttons">
+                    <a href="https://anthony-cup.github.io/resubidoUniversoPersonalizado/" target="_blank" class="project-btn">Abrir</a>
+                    <a href="#" target="_blank" class="project-video-btn" onclick="openVideo('https://www.tiktok.com/@king_tony_hxp/video/7541248077571591432?is_from_webapp=1&sender_device=pc&web_id=7498213128183662086')">Ver Video</a>
+                </div>
             </div>
         </div>
-        <div class="project-card">
-            <div class="project-notice">¡Personaliza tu link!</div>
+        <div class="project-card" data-category="con-panel">
+            <div class="project-notice">¡  Incluye panel para Personalizarlo !</div>
             <img src="proy1/4.jpg" alt="Pistola de Corazones" class="card-image" onclick="showImageModal(this.src)">
             <div class="card-body">
                 <h3 class="project-title">PISTOLA DE CORAZONES</h3>
-                <a href="https://compartir-ling.web.app" target="_blank" class="project-btn">Abrir</a>
+                <div class="project-buttons">
+                    <a href="https://compartir-ling.web.app" target="_blank" class="project-btn">Abrir</a>
+                    <a href="#" target="_blank" class="project-video-btn" onclick="openVideo('https://www.tiktok.com/@king_tony_hxp/video/7540202731466804485?is_from_webapp=1&sender_device=pc&web_id=7498213128183662086')">Ver Video</a>
+                </div>
             </div>
         </div>
-        <div class="project-card">
+        <div class="project-card" data-category="sin-panel">
+           <div class="project-notice">¡ No Incluye panel - solo ling !</div>
             <img src="proy1/3.png" alt="Declaración especial" class="card-image" onclick="showImageModal(this.src)">
             <div class="card-body">
                 <h3 class="project-title">DECLARACIÓN ESPECIAL</h3>
-                <a href="https://anthony-cup.github.io/declaracion-bonito-autor-tonyrealjs/" target="_blank" class="project-btn">Abrir</a>
+                <div class="project-buttons">
+                    <a href="https://anthony-cup.github.io/declaracion-bonito-autor-tonyrealjs/" target="_blank" class="project-btn">Abrir</a>
+                    <a href="#" target="_blank" class="project-video-btn" onclick="openVideo('https://www.tiktok.com/@king_tony_hxp/video/7519394534082481413?is_from_webapp=1&sender_device=pc&web_id=7498213128183662086')">Ver Video</a>
+                </div>
             </div>
         </div>
-        <div class="project-card">
+        <div class="project-card" data-category="sin-panel">
+           <div class="project-notice">¡ No Incluye panel - solo ling !</div>
             <img src="proy1/2.jpg" alt="Carta Sorpresa" class="card-image" onclick="showImageModal(this.src)">
             <div class="card-body">
                 <h3 class="project-title">CARTA SORPRESA</h3>
-                <a href="https://anthony-cup.github.io/mi-web-anthony/" target="_blank" class="project-btn">Abrir</a>
+                <div class="project-buttons">
+                    <a href="https://anthony-cup.github.io/mi-web-anthony/" target="_blank" class="project-btn">Abrir</a>
+                    <a href="#" target="_blank" class="project-video-btn" onclick="openVideo('https://www.tiktok.com/@king_tony_hxp/video/7497518519186197766?is_from_webapp=1&sender_device=pc&web_id=7498213128183662086')">Ver Video</a>
+                </div>
             </div>
         </div>
-        <div class="project-card">
+        <div class="project-card" data-category="sin-panel">
+           <div class="project-notice">¡ No Incluye panel - solo ling !</div>
             <img src="proy1/1.jpg" alt="Proyecto NANOTEC" class="card-image" onclick="showImageModal(this.src)">
             <div class="card-body">
                 <h3 class="project-title">PROYECTO NANOTEC</h3>
-                <a href="https://anthony-cup.github.io/manotext-codgio-realjsweb_/" target="_blank" class="project-btn">Abrir</a>
+                <div class="project-buttons">
+                    <a href="https://anthony-cup.github.io/manotext-codgio-realjsweb_/" target="_blank" class="project-btn">Abrir</a>
+                    <a href="#" target="_blank" class="project-video-btn" onclick="openVideo('https://www.tiktok.com/@king_tony_hxp/video/7509036223994907909?is_from_webapp=1&sender_device=pc&web_id=7498213128183662086')">Ver Video</a>
+                </div>
             </div>
         </div>
     </div>
@@ -686,10 +855,10 @@
         const db = getDatabase(app);
         // Función para leer cookies del navegador (busca por nombre exacto)
         function readCookie(name){ const parts = document.cookie.split(';').map(s=>s.trim()); for(const p of parts){ if(p.startsWith(name+'=')) return p.split('=')[1]; } return null; }
-    
+   
         // Función para setear cookies con expiración y flags para cross-site (SameSite=None;Secure para GitHub Pages HTTPS)
         function setCookie(name,value,expiresMs){ const d = new Date(Date.now()+expiresMs); document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/;SameSite=None;Secure`; }
-    
+   
         // Función para generar secreto aleatorio para cookie (32 chars hex)
         function makeCookieSecret(){ const arr = new Uint8Array(16); crypto.getRandomValues(arr); return Array.from(arr).map(b=>b.toString(16).padStart(2,'0')).join(''); }
         // Función para obtener fingerprint del dispositivo (sin IP para evitar fallos en fetch)
@@ -791,6 +960,7 @@
             // Ocultar loading después de la verificación
             setTimeout(() => {
                 loadingOverlay.classList.add('hidden');
+                initializeFilters(); // Inicializar filtros después de cargar
             }, 1000); // Pequeño delay para que se vea el loader
             if (!isRegistered) {
                 showIngresarModal();
@@ -894,6 +1064,62 @@
             modal.classList.remove('show');
             setTimeout(() => modal.style.display = 'none', 500);
         }
+        // Nueva función para abrir video (placeholder - reemplaza con links reales)
+        function openVideo(videoUrl) {
+            if (videoUrl && videoUrl !== '#') {
+                window.open(videoUrl, '_blank');
+            } else {
+                alert('Link del video próximamente disponible');
+            }
+        }
+        // Funciones para filtros y búsqueda
+        let currentFilter = 'con-panel'; // Filtro inicial
+        let searchTerm = '';
+
+        function initializeFilters() {
+            // Mostrar todos inicialmente basados en filtro por defecto
+            filterProjects();
+            // Event listeners para botones de filtro
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.category;
+                    filterProjects();
+                });
+            });
+            // Event listener para búsqueda en tiempo real
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', performSearch);
+            // Listener para icono de búsqueda
+            document.querySelector('.search-icon').addEventListener('click', performSearch);
+        }
+
+        function filterProjects() {
+            const cards = document.querySelectorAll('.project-card');
+            let visibleCount = 0;
+            cards.forEach(card => {
+                const category = card.dataset.category;
+                const title = card.querySelector('.project-title').textContent.toLowerCase();
+                if ((category === currentFilter || currentFilter === 'all') && 
+                    (searchTerm === '' || title.includes(searchTerm.toLowerCase()))) {
+                    card.classList.add('show');
+                    visibleCount++;
+                } else {
+                    card.classList.remove('show');
+                }
+            });
+            updateCount(visibleCount);
+        }
+
+        function performSearch() {
+            searchTerm = document.getElementById('search-input').value.trim();
+            filterProjects();
+        }
+
+        function updateCount(count) {
+            document.getElementById('project-count').textContent = `Total: ${count} proyectos`;
+        }
         // Exponer funciones al scope global (window) para que funcionen con onclick
         window.showDonationModal = showDonationModal;
         window.hideDonationModal = hideDonationModal;
@@ -908,6 +1134,7 @@
         window.ingresarBtnClick = ingresarBtnClick;
         window.showImageModal = showImageModal;
         window.hideImageModal = hideImageModal;
+        window.openVideo = openVideo;
         // Llamar a la verificación al cargar
         checkUserRegistration();
         document.addEventListener('DOMContentLoaded', function() {
